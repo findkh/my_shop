@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.myShop.mapper.LoginMapper">
+
+	<select id="getUserInfo" parameterType="map" resultType="com.kh.myShop.login.LoginEntity">
+		SELECT *
+		FROM tb_user_info
+		WHERE user_id = #{user_id}
+	</select>
+	
+</mapper>
