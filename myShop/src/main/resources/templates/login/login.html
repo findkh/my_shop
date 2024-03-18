@@ -4,8 +4,12 @@ xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-<title>Login</title>
-<link th:href="@{/assets/css/login.css}" rel="stylesheet" />
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Login</title>
+	<link th:href="@{/assets/css/login.css}" rel="stylesheet" />
+	<script type="text/javascript" th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
 </head>
 
 <body>
@@ -53,7 +57,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 			<div class="form-wrapper align-items-center">
 				<div class="form sign-in">
 				<form action="/login-proc" method="post">
-
+					<input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 					<div class="input-group">
 						<i class='bx bxs-user'></i>
 						<input type="text" name="user_id" placeholder="Id">

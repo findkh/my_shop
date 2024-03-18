@@ -4,7 +4,7 @@
 
 	<select id="getUserInfo" parameterType="map" resultType="com.kh.myShop.login.LoginEntity">
 		SELECT *
-		FROM tb_user_info
+		FROM user_info
 		WHERE user_id = #{user_id}
 	</select>
 	
