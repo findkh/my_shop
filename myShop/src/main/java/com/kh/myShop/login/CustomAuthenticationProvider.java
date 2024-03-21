@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import com.kh.myShop.service.LoginService;
+
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 

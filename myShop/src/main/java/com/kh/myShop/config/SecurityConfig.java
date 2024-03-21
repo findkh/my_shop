@@ -13,7 +13,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.kh.myShop.login.LoginService;
+import com.kh.myShop.service.LoginService;
 
 @Configuration
 @EnableWebSecurity

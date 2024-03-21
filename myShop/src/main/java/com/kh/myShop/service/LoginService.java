@@ -1,4 +1,4 @@
-package com.kh.myShop.login;
+package com.kh.myShop.service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.kh.myShop.login.LoginEntity;
 import com.kh.myShop.mapper.LoginMapper;
 
 @Service
