@@ -6,6 +6,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface MemberMapper {
-	List<Map<String,Object>> getMemberList(String shopId);
+public interface EmployeeMapper {
+	List<Map<String,Object>> getEmployeeList(Map<String,Object> param);
 }

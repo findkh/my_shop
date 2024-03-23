@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+	
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>%d %5p [%c] %m%n</Pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="console-infolog" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>%d %5p %m%n</Pattern>
+		</encoder>
+	</appender>
+	
+	<!-- 스프링 부트 및 데이터베이스 등의 라이브러리 로그는 info 수준으로 설정 -->
+	<logger name="org.springframework" level="INFO" appender-ref="console-infolog"/>
+	<logger name="jdbc" level="INFO" appender-ref="console-infolog"/>
+	<logger name="org.thymeleaf" level="OFF"/> <!-- Thymeleaf 로그 제거 -->
+	<logger name="com.zaxxer.hikari" level="OFF"/> <!-- HikariCP 로그 제거 -->
+	<logger name="org.mybatis.spring.mapper.ClassPathMapperScanner" level="INFO" appender-ref="console-infolog"/> <!-- MyBatis Mapper 로그 INFO 수준으로 설정 -->
+	<logger name="_org.springframework.web.servlet.HandlerMapping.Mappings" level="INFO" appender-ref="console-infolog"/> <!-- HandlerMapping 로그 INFO 수준으로 설정 -->
+	<logger name="log4jdbc.debug" level="INFO" appender-ref="console-infolog"/><!-- log4jdbc-debug 로그를 INFO 수준으로 설정 -->
+	
+	<root level="DEBUG"> <!-- 루트 로거는 DEBUG로 설정 -->
+		<appender-ref ref="console"/>
+	</root>
+</configuration>

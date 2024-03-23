@@ -15,8 +15,8 @@ public class ViewController {
 		return "login/login";
 	}
 	
-	@GetMapping("/member")
-	public String getMember() {
-		return "contents/member";
+	@GetMapping("/employee")
+	public String employee() {
+		return "contents/employee";
 	}
 }

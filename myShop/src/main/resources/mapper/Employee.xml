@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kh.myShop.mapper.MemberMapper">
+<mapper namespace="com.kh.myShop.mapper.EmployeeMapper">
 
-	<select id="getMemberList" parameterType="map" resultType="map">
+	<select id="getEmployeeList" resultType="map" parameterType="map">
 		SELECT *
 		FROM user_info
-		WHERE shop_id = #{shopId}
+		WHERE shop_id = #{_shopId}
 	</select>
 	
 </mapper>

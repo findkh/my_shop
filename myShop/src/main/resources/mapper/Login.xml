@@ -3,7 +3,7 @@
 <mapper namespace="com.kh.myShop.mapper.LoginMapper">
 
 	<select id="getUserInfo" parameterType="map" resultType="com.kh.myShop.login.LoginEntity">
-		SELECT *
+		SELECT id, user_id, shop_id, user_name, user_status, user_role, password
 		FROM user_info
 		WHERE user_id = #{user_id}
 	</select>

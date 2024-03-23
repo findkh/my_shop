@@ -3,6 +3,8 @@ package com.kh.myShop.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,6 +22,8 @@ public class LoginService implements UserDetailsService{
 	@Autowired
 	private LoginMapper mapper;
 
+	private static final Logger logger = LoggerFactory.getLogger(LoginService.class);
+	
 	private PasswordEncoder passwordEncoder;
 
 	public LoginService() {
@@ -28,14 +32,14 @@ public class LoginService implements UserDetailsService{
 
 	@Override
 	public UserDetails loadUserByUsername(String user_id) throws UsernameNotFoundException {
-		System.out.println("LoginService loadUserByUsername");
-		System.out.println("username : " + user_id);
+		logger.info("LoginService - loadUserByUsername");
+		logger.info("login id: {}", user_id);
 
 		Map<String,Object> param = new HashMap<String,Object>();
 		param.put("user_id", user_id);
 
 		LoginEntity loginEntity = mapper.getUserInfo(param);
-		System.out.println("loginEntity : " + loginEntity);
+		logger.info("loginEntity: {}", loginEntity);
 
 		if (loginEntity == null ) {
 			throw new UsernameNotFoundException("User not authorized.");
@@ -46,12 +50,13 @@ public class LoginService implements UserDetailsService{
 
 	// 사용자가 입력한 비밀번호와 DB에 저장된 비밀번호를 비교하는 메서드
 	public boolean authenticate(String username, String password) {
-		System.out.println("authenticate 호출됨");
+		logger.info("authenticate 실행");
 		Map<String,Object> param = new HashMap<String,Object>();
 		param.put("user_id", username);
 
 		LoginEntity loginEntity = mapper.getUserInfo(param);
-
+		logger.info("loginEntity: {} 실행");
+		
 		if (loginEntity == null ) {
 			return false;
 		}
