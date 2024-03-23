@@ -20,7 +20,7 @@ public class EmployeeService {
 	EmployeeMapper employeeMapper;
 	
 	// 회원 목록을 가져오는 메서드
-	public List<Map<String, Object>> getMemberList() {
+	public List<Map<String, Object>> getEmployeeList() {
 		logger.info("getMemberList Service 호출");
 		Map<String,Object> param = new HashMap<>();
 		List<Map<String, Object>> result = employeeMapper.getEmployeeList(param);
