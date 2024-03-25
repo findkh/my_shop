@@ -3,9 +3,21 @@
 <mapper namespace="com.kh.myShop.mapper.EmployeeMapper">
 
 	<select id="getEmployeeList" resultType="map" parameterType="map">
-		SELECT *
-		FROM user_info
+		SELECT a.id, a.user_id, a.user_name, b.status_nm
+		FROM user_info a
+		LEFT OUTER JOIN employee_status b on b.status = a.user_status 
 		WHERE shop_id = #{_shopId}
+		AND user_id != #{_userId}
+		ORDER BY a.created_dt
 	</select>
 	
+	<select id="findEmployee" resultType="map" parameterType="map">
+		SELECT a.id, a.user_id, a.user_name, b.status_nm
+		FROM user_info a
+		LEFT OUTER JOIN employee_status b on b.status = a.user_status 
+		WHERE shop_id = #{_shopId}
+		AND user_id != #{_userId}
+		AND a.user_name LIKE CONCAT('%', #{keyword}, '%')
+		ORDER BY a.created_dt
+	</select>
 </mapper>

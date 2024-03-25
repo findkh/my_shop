@@ -47,7 +47,7 @@ public class MybatisInterceptor implements Interceptor {
 			String userName = authentication.getName();
 
 			if (param instanceof HashMap) {
-				((HashMap) param).put("_userid", userName);
+				((HashMap) param).put("_userId", userName);
 				((HashMap) param).put("_shopId", user.getShop_id());
 			}
 		}
