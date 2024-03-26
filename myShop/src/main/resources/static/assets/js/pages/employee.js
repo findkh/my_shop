@@ -8,15 +8,20 @@ $(document).ready(function() {
 		columns: [
 			{ name: 'id', hidden: true},
 			{ header: '이름', name: 'user_name', className: 'column_click'},
-			{ header: '재직상태', name: 'status_nm' },
+			{ header: '재직상태', name: 'status_nm', className: 'column_click' },
 		]
 	});
 
 	employeeGrid.on('click', (ev) => {
 		const { rowKey, columnName } = ev;
-		if(columnName == 'user_name'){
+		if(columnName == 'user_name' || columnName == 'status_nm'){
 			const rowData = employeeGrid.getRow(rowKey);
 			console.log(rowData)
+			        // 클릭된 행의 ID 가져오기
+			const employeeId = rowData.id;
+
+			// viewEmployeeInfo 페이지로 이동하고 URL에 직원의 ID를 추가
+			window.location.href = '/viewEmployeeInfo?id=' + employeeId;
 		}
 	});
 
@@ -41,7 +46,7 @@ $(document).ready(function() {
 			type: 'GET',
 			url: '/findEmployee',
 			data: {
-				searchKeyword: $('#searchInput').val();
+				searchKeyword: $('#searchInput').val()
 			},
 			success: function(result) {
 				if(result.length > 0){
