@@ -18,25 +18,39 @@ layout:decorate="~{layout/default}">
 							<div class="card-body">
 								<h4 class="card-title">직원 정보</h4>
 									<form action="#">
-										<div class="form-body">
+										<div class="form-body ms-3">
+											<div class="row">
+												<div class="col-lg-6 text-end">
+													<img src="../assets/images/users/5.jpg" alt="image" class="img-thumbnail" width="200">
+													<p class="mt-3 mb-0">
+												</div>
+												<div class="col-lg-6 text-start">
+													<img src="../assets/images/users/5.jpg" alt="image" class="img-thumbnail" width="200">
+													<p class="mt-3 mb-0">
+												</div>
+											</div>
 											<div class="form-group mb-3 row">
 												<div class="col-md-6 row">
-													<label class="col-md-3">이름 </label>
+													<div  class="col-md-3">
+														<label>이름</label>
+													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control">
 													</div>
 												</div>
 												<div class="col-6 row">
-													<label class="col-md-3">주민번호</label>
+													<div class="col-md-3">
+														<label>주민번호</label>
+													</div>
 													<div class="col-md-9">
 														<div class="row">
 															<div class="col-md-5">
 																<input type="number" class="form-control">
 															</div>
-															<div class="col-md-1">
+															<div class="col-md-2">
 																<label>-</label>
 															</div>
-															<div class="col-md-6">
+															<div class="col-md-5">
 																<input type="password" class="form-control">
 															</div>
 														</div>
@@ -46,13 +60,17 @@ layout:decorate="~{layout/default}">
 											
 											<div class="form-group mb-3 row">
 												<div class="col-6 row">
-													<label class="col-md-3">전화번호 </label>
+													<div class="col-md-3">
+														<label>전화번호</label>
+													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control">
 													</div>
 												</div>
 												<div class="col-6 row">
-													<label class="col-md-3">직원코드</label>
+													<div class="col-md-3">
+														<label>직원코드</label>
+													</div>
 													<div class="col-md-9">
 														<div>
 															<input type="text" class="form-control">
@@ -62,120 +80,174 @@ layout:decorate="~{layout/default}">
 											</div>
 											
 											<div class="form-group mb-3 row">
-												<label class="col-md-1">주소</label>
-												<div class="col-md-10">
+												<div class="col-6 row">
+													<div class="col-md-3">
+														<label>주소</label>
+													</div>
+													<div class="col-md-9">
+														<input type="text" class="form-control">
+													</div>
+												</div>
+												<div class="col-6 row">
+													<div class="col-md-3">
+														<label>계좌번호</label>
+													</div>
+													<div class="col-md-9">
+														<div>
+															<input type="text" class="form-control">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group mb-3 row">
+												<div class="form-group mb-3 row">
+													<div class="col-6 row">
+														<div class="col-md-3">
+															<label>비고</label>
+														</div>
+														<div class="col-md-9 custom-textreat-p">
+															<textarea class="form-control" rows="3"></textarea>
+														</div>
+													</div>
+												</div>
+											</div>
+											<hr>
+											<h4 class="card-title">채용 정보</h4>
+											<div class="form-group mb-3 row">
+												<div class="col-6 row">
+													<div class="col-md-3">
+														<label>입사일</label>
+													</div>
+													<div class="col-md-9">
+														<input type="date" class="form-control">
+													</div>
+												</div>
+												<div class="col-6 row">
+													<div class="col-md-3">
+														<label>퇴사일</label>
+													</div>
+													<div class="col-md-9">
+														<div>
+															<input type="date" class="form-control">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group mb-3 row">
+												<div class="col-6 row">
+													<div class="col-md-3">
+														<label>근무상태</label>
+													</div>
+													<div class="col-md-9">
+														<select class='form-select mr-sm-2'>
+															<option>재직</option>
+															<option>퇴사</option>
+															<option>휴직</option>
+														</select>
+													</div>
+												</div>
+												<div class="col-6 row">
+													<div class="col-md-3">
+														<label>근무형태</label>
+													</div>
+													<div class="col-md-9">
+														<div>
+															<select class='form-select mr-sm-2'>
+																<option>파트타임</option>
+																<option>정직원</option>
+															</select>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group mb-3 row">
+												<div class="col-6 row">
 													<div class="row">
-														<div class="col-md-6">
-															<div class="form-group mb-3">
-																<input type="text" class="form-control">
+														<label class="col-md-3">근무요일</label>
+														<div class="col-md-9 ps-4 c-p-t">
+															<div class="form-check form-inline">
+																<input class="form-check-input" type="checkbox" id="monCheckbox" value="mon">
+																<label class="form-check-label" for="monCheckbox">월</label>
+															</div>
+															<div class="form-check form-inline">
+																<input class="form-check-input" type="checkbox" id="tueCheckbox" value="tue">
+																<label class="form-check-label" for="tueCheckbox">화</label>
+															</div>
+															<div class="form-check form-inline">
+																<input class="form-check-input" type="checkbox" id="wedCheckbox" value="wed">
+																<label class="form-check-label" for="wedCheckbox">수</label>
+															</div>
+															<div class="form-check form-inline">
+																<input class="form-check-input" type="checkbox" id="thuCheckbox" value="thu">
+																<label class="form-check-label" for="thuCheckbox">목</label>
+															</div>
+															<div class="form-check form-inline">
+																<input class="form-check-input" type="checkbox" id="friCheckbox" value="fri">
+																<label class="form-check-label" for="friCheckbox">금</label>
+															</div>
+															<div class="form-check form-inline">
+																<input class="form-check-input" type="checkbox" id="satCheckbox" value="sat">
+																<label class="form-check-label" for="satCheckbox">토</label>
+															</div>
+															<div class="form-check form-inline">
+																<input class="form-check-input" type="checkbox" id="sunCheckbox" value="sun">
+																<label class="form-check-label" for="sunCheckbox">일</label>
 															</div>
 														</div>
-														<div class="col-md-6">
-																<div class="form-group mb-3">
-																	<input type="text" class="form-control">
-																</div>
+													</div>
+												</div>
+												<div class="col-6 row">
+													<div class="col-md-3">
+														<label>근무시간</label>
+													</div>
+													<div class="col-md-9">
+														<div class="row">
+															<div class="col-md-5">
+																<input type="time" class="form-control">
+															</div>
+															<div class="col-md-2">
+																<label>~</label>
+															</div>
+															<div class="col-md-5">
+																<input type="time" class="form-control">
+															</div>
 														</div>
 													</div>
 												</div>
 											</div>
-									</div>
-									<hr>
-									<h4 class="card-title">채용 정보</h4>
-									<div class="form-group mb-3 row">
-										<div class="col-6 row">
-											<label class="col-md-3">입사일</label>
-											<div class="col-md-9">
-												<input type="date" class="form-control">
-											</div>
-										</div>
-										<div class="col-6 row">
-											<label class="col-md-3">퇴사일</label>
-											<div class="col-md-9">
-												<div>
-													<input type="date" class="form-control">
+											<div class="form-group mb-3 row">
+												<div class="col-6 row">
+													<div class="col-md-3">
+														<select class="form-select col-md-6 mr-sm-2">
+															<option selected>시급</option>
+															<option>연봉</option>
+														</select>
+													</div>
+													<div class="col-md-8">
+															<input type="number" class="form-control col-md-6">
+													</div>
 												</div>
-											</div>
-										</div>
-									</div>
-									<div class="form-group mb-3 row">
-										<div class="col-6 row">
-											<label class="col-md-3">근무상태</label>
-											<div class="col-md-9">
-												<select class='form-select mr-sm-2'>
-													<option>재직</option>
-													<option>퇴사</option>
-													<option>휴직</option>
-												</select>
-											</div>
-										</div>
-										<div class="col-6 row">
-											<label class="col-md-3">근무형태</label>
-											<div class="col-md-9">
-												<div>
-													<select class='form-select mr-sm-2'>
-														<option>파트타임</option>
-														<option>정직원</option>
-													</select>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="form-group mb-3 row">
-										<div class="col-md-6">
-											<div class="row">
-												<label class="col-md-3">근무요일</label>
-												<div class="col-md-9">
-													<div class="form-check form-check-inline">
-														<input class="form-check-input" type="checkbox" id="monCheckbox" value="mon">
-														<label class="form-check-label" for="monCheckbox">월</label>
+												<div class="col-md-6 row">
+													<div class="col-md-3">
+														<label>근로자형태</label>
 													</div>
-													<div class="form-check form-check-inline">
-														<input class="form-check-input" type="checkbox" id="tueCheckbox" value="tue">
-														<label class="form-check-label" for="tueCheckbox">화</label>
-													</div>
-													<div class="form-check form-check-inline">
-														<input class="form-check-input" type="checkbox" id="wedCheckbox" value="wed">
-														<label class="form-check-label" for="wedCheckbox">수</label>
-													</div>
-													<div class="form-check form-check-inline">
-														<input class="form-check-input" type="checkbox" id="thuCheckbox" value="thu">
-														<label class="form-check-label" for="thuCheckbox">목</label>
-													</div>
-													<div class="form-check form-check-inline">
-														<input class="form-check-input" type="checkbox" id="friCheckbox" value="fri">
-														<label class="form-check-label" for="friCheckbox">금</label>
-													</div>
-													<div class="form-check form-check-inline">
-														<input class="form-check-input" type="checkbox" id="satCheckbox" value="sat">
-														<label class="form-check-label" for="satCheckbox">토</label>
-													</div>
-													<div class="form-check form-check-inline">
-														<input class="form-check-input" type="checkbox" id="sunCheckbox" value="sun">
-														<label class="form-check-label" for="sunCheckbox">일</label>
+													<div class="col-md-9">
+														<select class='form-select mr-sm-2'>
+															<option>일반 근로자</option>
+															<option>초단시간 근로자</option>
+															<option>단시간 근로자</option>
+															<option>계약직</option>
+														</select>
 													</div>
 												</div>
 											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="row align-items-center">
-												<div class="col-md-6">
-													<select class="form-select col-md-6 mr-sm-2">
-														<option selected>시급</option>
-														<option>연봉</option>
-													</select>
-												</div>
-												<div class="col-md-6">
-													<input type="number" class="form-control col-md-6">
+											<div class="form-actions">
+												<div class="text-end">
+													<button type="button" class="btn btn-dark">목록</button>
+													<button type="button" class="btn btn-secondary">수정</button>
+													<button type="button" class="btn btn-info">저장</button>
 												</div>
 											</div>
-										</div>
-									</div>
-									<div class="form-actions">
-										<div class="text-end">
-											<button type="button" class="btn btn-dark">목록</button>
-											<button type="button" class="btn btn-secondary">수정</button>
-											<button type="button" class="btn btn-info">저장</button>
-										</div>
 									</div>
 								</form>
 							</div>

@@ -2,3 +2,22 @@
 .column_click{
 	cursor: pointer;
 }
+.form-inline{
+	display: inline-block;
+	margin-right: 7px;s
+}
+/*label 세로 중앙 정렬*/
+.col-md-3 {
+	display: flex;
+	align-items: center;
+}
+.col-md-3 label {
+	margin-bottom: 0;
+}
+.c-p-t{
+	padding-top: 0.3rem;
+}
+.custom-textreat-p{
+	padding-left: 1.1rem;
+	padding-right: 0;
+}
