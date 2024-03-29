@@ -24,4 +24,9 @@ public class ViewController {
 	public String viewEmployeeInfo() {
 		return "contents/employee_view";
 	}
+	
+	@GetMapping("/addEmployeeInfo")
+	public String addEmployeeInfo() {
+		return "contents/employee_add";
+	}
 }

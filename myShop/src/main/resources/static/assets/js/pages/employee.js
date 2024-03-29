@@ -16,11 +16,7 @@ $(document).ready(function() {
 		const { rowKey, columnName } = ev;
 		if(columnName == 'user_name' || columnName == 'status_nm'){
 			const rowData = employeeGrid.getRow(rowKey);
-			console.log(rowData)
-			        // 클릭된 행의 ID 가져오기
 			const employeeId = rowData.id;
-
-			// viewEmployeeInfo 페이지로 이동하고 URL에 직원의 ID를 추가
 			window.location.href = '/viewEmployeeInfo?id=' + employeeId;
 		}
 	});
@@ -57,6 +53,10 @@ $(document).ready(function() {
 				console.error('요청 실패:', error);
 			}
 		});
+	});
+	
+	$('#addBtn').click(function(){
+		window.location.href = '/addEmployeeInfo';
 	})
 });
 
