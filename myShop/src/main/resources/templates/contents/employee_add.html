@@ -19,6 +19,7 @@ layout:decorate="~{layout/default}">
 								<h4 class="card-title">직원 정보</h4>
 									<form action="#">
 										<div class="form-body ms-3">
+											<input type="hidden" id='csrfParam' th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 											<div class="row">
 												<div class="col-lg-12 text-center">
 													<img src="../assets/img/noun-no-image-2999524.png" alt="image" class="img-thumbnail" width="200" id="previewImg">
@@ -41,7 +42,7 @@ layout:decorate="~{layout/default}">
 														<label>이름</label>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control">
+														<input type="text" class="form-control" id="name">
 													</div>
 												</div>
 												<div class="col-6 row">
@@ -51,13 +52,13 @@ layout:decorate="~{layout/default}">
 													<div class="col-md-9">
 														<div class="row">
 															<div class="col-md-5">
-																<input type="number" class="form-control">
+																<input type="text" class="form-control" id="jumin1" maxlength="6">
 															</div>
 															<div class="col-md-2">
 																<label>-</label>
 															</div>
 															<div class="col-md-5">
-																<input type="password" class="form-control">
+																<input type="text" class="form-control" id="jumin2" maxlength="6">
 															</div>
 														</div>
 													</div>
@@ -70,7 +71,7 @@ layout:decorate="~{layout/default}">
 														<label>전화번호</label>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control">
+														<input type="text" class="form-control" id="tel">
 													</div>
 												</div>
 												<div class="col-6 row">
@@ -79,7 +80,7 @@ layout:decorate="~{layout/default}">
 													</div>
 													<div class="col-md-9">
 														<div>
-															<input type="text" class="form-control">
+															<input type="text" class="form-control" disabled placeholder="직원정보 저장 후 자동 생성됩니다.">
 														</div>
 													</div>
 												</div>
@@ -91,7 +92,7 @@ layout:decorate="~{layout/default}">
 														<label>주소</label>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control">
+														<input type="text" class="form-control" id="address">
 													</div>
 												</div>
 												<div class="col-6 row">
@@ -100,7 +101,7 @@ layout:decorate="~{layout/default}">
 													</div>
 													<div class="col-md-9">
 														<div>
-															<input type="text" class="form-control">
+															<input type="text" class="form-control" id="accountNum">
 														</div>
 													</div>
 												</div>
@@ -112,7 +113,7 @@ layout:decorate="~{layout/default}">
 															<label>비고</label>
 														</div>
 														<div class="col-md-9 custom-textreat-p">
-															<textarea class="form-control" rows="3"></textarea>
+															<textarea class="form-control" rows="3" id="employeeComments"></textarea>
 														</div>
 													</div>
 												</div>
@@ -125,7 +126,7 @@ layout:decorate="~{layout/default}">
 														<label>입사일</label>
 													</div>
 													<div class="col-md-9">
-														<input type="date" class="form-control">
+														<input type="date" class="form-control" id="joinDate">
 													</div>
 												</div>
 												<div class="col-6 row">
@@ -134,7 +135,7 @@ layout:decorate="~{layout/default}">
 													</div>
 													<div class="col-md-9">
 														<div>
-															<input type="date" class="form-control">
+															<input type="date" class="form-control" id="hireDate">
 														</div>
 													</div>
 												</div>
@@ -145,10 +146,10 @@ layout:decorate="~{layout/default}">
 														<label>근무상태</label>
 													</div>
 													<div class="col-md-9">
-														<select class='form-select mr-sm-2'>
-															<option>재직</option>
-															<option>퇴사</option>
-															<option>휴직</option>
+														<select class='form-select mr-sm-2' id="userStatus">
+															<option value="active">재직</option>
+															<option value="retired">퇴사</option>
+															<option value="leave">휴직</option>
 														</select>
 													</div>
 												</div>
@@ -158,9 +159,9 @@ layout:decorate="~{layout/default}">
 													</div>
 													<div class="col-md-9">
 														<div>
-															<select class='form-select mr-sm-2'>
-																<option>파트타임</option>
-																<option>정직원</option>
+															<select class='form-select mr-sm-2' id="jobType">
+																<option value="part">파트타임</option>
+																<option value="full">정직원</option>
 															</select>
 														</div>
 													</div>
@@ -209,13 +210,13 @@ layout:decorate="~{layout/default}">
 													<div class="col-md-9">
 														<div class="row">
 															<div class="col-md-5">
-																<input type="time" class="form-control">
+																<input type="time" class="form-control" id="startTime">
 															</div>
 															<div class="col-md-2">
 																<label>~</label>
 															</div>
 															<div class="col-md-5">
-																<input type="time" class="form-control">
+																<input type="time" class="form-control" id="endTime">
 															</div>
 														</div>
 													</div>
@@ -224,9 +225,9 @@ layout:decorate="~{layout/default}">
 											<div class="form-group mb-3 row">
 												<div class="col-6 row">
 													<div class="col-md-3">
-														<select class="form-select col-md-6 mr-sm-2">
-															<option selected>시급</option>
-															<option>연봉</option>
+														<select class="form-select col-md-6 mr-sm-2" id="wageType">
+															<option value="time" selected>시급</option>
+															<option value="year">연봉</option>
 														</select>
 													</div>
 													<div class="col-md-8">
@@ -235,21 +236,35 @@ layout:decorate="~{layout/default}">
 												</div>
 												<div class="col-md-6 row">
 													<div class="col-md-3">
-														<label>근로자형태</label>
+<!-- 														<label>근로자형태</label> -->
+<!-- 													</div> -->
+<!-- 													<div class="col-md-9 row"> -->
+<!-- 														<div class="col-md-6"> -->
+<!-- 															<select class='form-select mr-sm-2' disabled> -->
+<!-- 																<option value="none">---</option> -->
+<!-- 																<option value="normal">일반 근로자</option> -->
+<!-- 																<option value="chodan">초단시간 근로자</option> -->
+<!-- 																<option value="dan">단시간 근로자</option> -->
+<!-- 																<option value="contract">계약직</option> -->
+<!-- 															</select> -->
+<!-- 														</div> -->
+<!-- 														<div class="col-md-6 block-tag"> -->
+<!-- 															<small class="badge badge-default text-bg-success" style="min-width:38px;padding-top:7px;"> -->
+<!-- 																월 근로시간 60시간 이상,<br> 1개월 이상 근무시 4대보험 필수 가입 -->
+<!-- 															</small> -->
+<!-- 														</div> -->
 													</div>
-													<div class="col-md-9">
-														<select class='form-select mr-sm-2'>
-															<option>일반 근로자</option>
-															<option>초단시간 근로자</option>
-															<option>단시간 근로자</option>
-															<option>계약직</option>
-														</select>
+												</div>
+												<div class="col-md-12 row">
+													<div class="col-md-6 row">
+													</div>
+													<div class="col-md-6 row">
 													</div>
 												</div>
 											</div>
 											<div class="form-actions">
 												<div class="text-end">
-													<button type="button" class="btn btn-dark">목록</button>
+													<button type="button" class="btn btn-dark" id="goListBtn">목록</button>
 													<button type="button" class="btn btn-info" id="saveBtn">저장</button>
 												</div>
 											</div>

@@ -15,9 +15,9 @@ public class ViewController {
 		return "login/login";
 	}
 	
-	@GetMapping("/employee")
+	@GetMapping("/employeeList")
 	public String employee() {
-		return "contents/employee";
+		return "contents/employee_list";
 	}
 	
 	@GetMapping("/viewEmployeeInfo")

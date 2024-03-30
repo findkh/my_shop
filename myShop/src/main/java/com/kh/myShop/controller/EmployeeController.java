@@ -5,8 +5,10 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.myShop.service.EmployeeService;
 
@@ -28,5 +30,15 @@ public class EmployeeController {
 		return employeeService.findEmployee(searchKeyword);
 	}
 	
-
+	//직원 등록
+	@PostMapping("/employee/saveEmployee")
+	public Map<String, Object> saveEmployee(@RequestParam("info") String info,
+	                                        @RequestParam("detail") String detail,
+	                                        @RequestParam("img") MultipartFile img) {
+	    System.out.println("컨트롤러 호출됨");
+	    System.out.println(info);
+	    System.out.println(detail);
+	    System.out.println(img);
+	    return employeeService.saveEmployee(info, detail, img);
+	}
 }
