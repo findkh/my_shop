@@ -14,7 +14,7 @@
 	</appender>
 	
 	<!-- 스프링 부트 및 데이터베이스 등의 라이브러리 로그는 info 수준으로 설정 -->
-	<logger name="org.springframework" level="DEBUG" appender-ref="console-infolog"/>
+	<logger name="org.springframework" level="INFO" appender-ref="console-infolog"/>
 	<logger name="jdbc" level="INFO" appender-ref="console-infolog"/>
 	<logger name="org.thymeleaf" level="OFF"/> <!-- Thymeleaf 로그 제거 -->
 	<logger name="com.zaxxer.hikari" level="OFF"/> <!-- HikariCP 로그 제거 -->

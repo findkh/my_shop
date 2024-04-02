@@ -17,7 +17,7 @@ $(document).ready(function() {
 		let info = {
 			name: $('#name').val(),
 			jumin_num: $('#jumin1').val() + '-' + $('#jumin2').val(),
-			tel: $('tel').val(),
+			tel: $('#tel').val(),
 			address: $('#address').val(),
 			account_num: $('#accountNum').val(),
 			comments: $('#employeeComments').val(),
@@ -103,53 +103,39 @@ function isImageFile(file) {
 
 //직원 저장 함수
 function saveEmployee(info, detail, img) {
-	console.log('여기')
-	console.log(csrfParam.value)
-	
-    let formData = new FormData();
-    formData.append('info', JSON.stringify(info));
-    formData.append('detail', JSON.stringify(detail));
-    formData.append('_csrf', csrfParam.value)
+	let formData = new FormData();
+	formData.append('info', JSON.stringify(info));
+	formData.append('detail', JSON.stringify(detail));
+	formData.append('_csrf', csrfParam.value);
 
-    if (img != null && img != undefined) {
-        formData.append('img', img);
-    }
+	if (img != null && img != undefined) {
+		formData.append('img', img);
+	}
 
-    // 쿠키에서 CSRF 토큰을 가져옵니다.
-//    let csrfToken = getCsrfTokenFromCookie();
-    
-
-    $.ajax({
-        url: '/employee/saveEmployee',
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-//        beforeSend: function(xhr) {
-//            // AJAX 요청 전에 CSRF 토큰을 헤더에 추가
-//            xhr.setRequestHeader('X-CSRF-TOKEN', $('#csrfParameterName').val());
-//        },
-        success: function(response) {
-            console.log(response);
-            // 성공적으로 서버로부터 응답을 받았을 때의 동작을 정의합니다.
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr.responseText);
-            // 요청이 실패했을 때의 동작을 정의합니다.
-        }
-    });
+	$.ajax({
+		url: '/employee/saveEmployee',
+		type: 'POST',
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function(response) {
+			console.log(response);
+		},
+		error: function(xhr, status, error) {
+			console.error(xhr.responseText);
+		}
+	});
 }
 
-
 function getCsrfTokenFromCookie() {
-    let csrfToken = null;
-    const cookieEntries = document.cookie.split(';');
-    for (let i = 0; i < cookieEntries.length; i++) {
-        const cookieEntry = cookieEntries[i].trim();
-        if (cookieEntry.startsWith('XSRF-TOKEN=')) {
-            csrfToken = cookieEntry.substring('XSRF-TOKEN='.length, cookieEntry.length);
-            break;
-        }
-    }
-    return csrfToken;
+	let csrfToken = null;
+	const cookieEntries = document.cookie.split(';');
+	for (let i = 0; i < cookieEntries.length; i++) {
+		const cookieEntry = cookieEntries[i].trim();
+		if (cookieEntry.startsWith('XSRF-TOKEN=')) {
+			csrfToken = cookieEntry.substring('XSRF-TOKEN='.length, cookieEntry.length);
+			break;
+		}
+	}
+	return csrfToken;
 }

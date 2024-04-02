@@ -33,12 +33,8 @@ public class EmployeeController {
 	//직원 등록
 	@PostMapping("/employee/saveEmployee")
 	public Map<String, Object> saveEmployee(@RequestParam("info") String info,
-	                                        @RequestParam("detail") String detail,
-	                                        @RequestParam("img") MultipartFile img) {
-	    System.out.println("컨트롤러 호출됨");
-	    System.out.println(info);
-	    System.out.println(detail);
-	    System.out.println(img);
+											@RequestParam("detail") String detail,
+											@RequestParam(value = "img", required = false) MultipartFile img) {
 	    return employeeService.saveEmployee(info, detail, img);
 	}
 }
