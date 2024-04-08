@@ -19,11 +19,10 @@ import com.kh.myShop.login.LoginEntity;
  * MyBatis 쿼리 메서드를 인터셉트하여 보안 및 사용자 관련 추가 기능을 제공하는 Interceptor
  * 주로 사용자 인증 정보를 파라미터에 추가하는 역할을 수행
  */
-@Intercepts({@Signature(type = Executor.class, method = "query", args = {
-		MappedStatement.class, 
-		Object.class, 
-		RowBounds.class, 
-		ResultHandler.class})}) // Executor의 query 메서드 시그니처에 RowBounds 및 ResultHandler 추가
+@Intercepts({
+	@Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}),
+	@Signature(type=Executor.class, method="update", args= {MappedStatement.class, Object.class}),
+}) // Executor의 query 메서드 시그니처에 RowBounds 및 ResultHandler 추가
 public class MybatisInterceptor implements Interceptor {
 
 	/**

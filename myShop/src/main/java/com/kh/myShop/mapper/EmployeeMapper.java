@@ -10,4 +10,12 @@ public interface EmployeeMapper {
 	List<Map<String,Object>> getEmployeeList(Map<String,Object> param);
 	
 	List<Map<String,Object>> findEmployee(Map<String,Object> param);
+	
+	void saveUser(Map<String, Object> param);
+	
+	void saveInfo(Map<String,Object> param);
+	
+//	void saveDetail(Map<String,Object> param);
+	
+//	void saveImgInfo(Map<String,Object> param);
 }

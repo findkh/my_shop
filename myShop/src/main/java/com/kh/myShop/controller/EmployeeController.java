@@ -35,6 +35,7 @@ public class EmployeeController {
 	public Map<String, Object> saveEmployee(@RequestParam("info") String info,
 											@RequestParam("detail") String detail,
 											@RequestParam(value = "img", required = false) MultipartFile img) {
+		System.out.println("호출됨");
 	    return employeeService.saveEmployee(info, detail, img);
 	}
 }

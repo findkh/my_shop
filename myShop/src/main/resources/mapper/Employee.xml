@@ -20,4 +20,45 @@
 		AND a.user_name LIKE CONCAT('%', #{keyword}, '%')
 		ORDER BY a.created_dt
 	</select>
+	
+	<insert id="saveUser" parameterType="map" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO user_info (
+			shop_id, user_name, user_status, user_role, created_id, created_dt, modified_id, modified_dt
+		)
+		VALUES (
+			#{_shopId}, #{userName}, #{userStatus}, #{userRole}, #{_userId}, now(), #{_userId}, now()
+		)
+	</insert>
+	
+	<insert id="saveInfo" parameterType="map">
+		INSERT INTO employee_info (
+			id, shop_id, employee_code, jumin_num, address1, address2, user_status, phone_number,
+			comments, account_num, created_id, created_dt, modified_id, modified_dt
+			)
+		VALUES (
+			#{id}, #{_shopId}, #{employeeCode}, #{enc_jumin}, #{address1}, #{address2}, #{status}, #{enc_tel},
+			#{comments}, #{accountNum}, #{_userId}, now(), #{_userId}, now()
+		)
+	</insert>
+	
+<!-- 	<insert id="saveDetail" parameterMap="map"> -->
+<!-- 		INSERT INTO employment_details( -->
+<!-- 			id, join_date, hire_date, start_time, end_time, wage_type, wage, job_type, working_day, -->
+<!-- 			created_id, created_dt, modified_id, modified_dt -->
+<!-- 		) -->
+<!-- 		VALUES ( -->
+<!-- 			#{id}, #{join_date}, #{hire_date}, #{start_time}, #{end_time}, #{wage_type}, #{wage}, #{job_type}, #{working_day}, -->
+<!-- 			#{_userId}, now(), #{_userId}, now() -->
+<!-- 		) -->
+<!-- 	</insert> -->
+	
+<!-- 	<insert id="saveImgInfo" parameterMap="map"> -->
+<!-- 		INSERT INTO ( -->
+<!-- 			id, img_name, origin_name, created_id, created_dt, modified_id, modified_dt -->
+<!-- 		) -->
+<!-- 		VALUES ( -->
+<!-- 			#{id}, #{encFileName}, #{originFileName}, #{_userId}, now(), #{_userId}, now() -->
+<!-- 		) -->
+<!-- 	</insert> -->
+	
 </mapper>

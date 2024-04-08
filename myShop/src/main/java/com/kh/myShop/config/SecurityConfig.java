@@ -60,6 +60,7 @@ public class SecurityConfig{
 				authorizeRequests
 					.requestMatchers("/login/**", "/assets/**").permitAll() // 로그인 및 정적 자원에 대한 접근 허용
 					.requestMatchers("/employee/**").hasRole("ADMIN")
+					.requestMatchers("/employee/saveEmployee").hasRole("ADMIN")
 					.anyRequest().authenticated() // 그 외 요청에 대해서는 인증 필요
 			)
 			// 폼 로그인 설정

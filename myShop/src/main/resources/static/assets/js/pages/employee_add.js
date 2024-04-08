@@ -31,7 +31,8 @@ $(document).ready(function() {
 			working_day: getCheckedValues(),
 			start_time: $('#startTime').val(),
 			end_time: $('#endTime').val(),
-			wage_type: $('#wageType').val()
+			wage_type: $('#wageType').val(),
+			wage: $('#wage').val()
 		};
 		
 		let imageFile = $('#imageFile')[0].files[0];
@@ -54,7 +55,7 @@ $(document).ready(function() {
 		}
 		
 		if(isOverSize(file)){
-			alert('사진 용량이 50KB를 초과할 수 없습니다.');
+			alert('사진 용량이 100MB를 초과할 수 없습니다.');
 			$("#imageFile").val('');
 			return false;
 		}
@@ -90,7 +91,7 @@ function getCheckedValues() {
 
 //사진 용량 체크
 function isOverSize(file) {
-	let maxSize = 50 * 1024; // 50KB로 제한
+	let maxSize = 100 * 1024 * 1024; // 100MB를 바이트 단위로 계산
 	return (file.size > maxSize) ? true : false;
 };
 
