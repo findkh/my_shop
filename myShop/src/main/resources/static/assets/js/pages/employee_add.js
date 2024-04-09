@@ -1,6 +1,21 @@
 $(document).ready(function() {
 	let csrfParam = $('#csrfParam').val();
 	
+	//입사일 세팅
+	let today = new Date();
+	let dd = String(today.getDate()).padStart(2, '0');
+	let mm = String(today.getMonth() + 1).padStart(2, '0');
+	let yyyy = today.getFullYear();
+	let formattedDate = yyyy + '-' + mm + '-' + dd;
+	$('#joinDate').val(formattedDate);
+	
+	//근무시간 기본값 세팅
+	let defaultStartTime = '09:00';
+	let defaultEndTime = '18:00';
+
+	$('#startTime').val(defaultStartTime);
+	$('#endTime').val(defaultEndTime);
+	
 	$('#saveBtn').click(function(){
 		//직원정보 필수값 유효성 검사
 		//필수값: 이름, 전화번호
@@ -32,7 +47,7 @@ $(document).ready(function() {
 			start_time: $('#startTime').val(),
 			end_time: $('#endTime').val(),
 			wage_type: $('#wageType').val(),
-			wage: $('#wage').val()
+			wage: $('#wage').val() == "" ? 0 : $('#wage').val()
 		};
 		
 		let imageFile = $('#imageFile')[0].files[0];
@@ -98,7 +113,6 @@ function isOverSize(file) {
 //확장자 확인
 function isImageFile(file) {
 	let ext = file.name.split(".").pop().toLowerCase();
-	console.log(ext);
 	return ($.inArray(ext, ["jpg", "jpeg", "gif", "png"]) == -1) ? true : false;
 };
 
@@ -120,7 +134,10 @@ function saveEmployee(info, detail, img) {
 		processData: false,
 		contentType: false,
 		success: function(response) {
-			console.log(response);
+			if(response.msg == 'success'){
+				alert('저장되었습니다.');
+				window.location.href = `viewEmployeeInfo?id=${response.id}`;
+			}
 		},
 		error: function(xhr, status, error) {
 			console.error(xhr.responseText);

@@ -110,18 +110,14 @@ public class EmployeeService {
 		
 		employeeMapper.saveUser(userMap);
 		
-		infoMap.put("id", infoMap.get("id").toString());
-		detailMap.put("id", infoMap.get("id").toString());
+		infoMap.put("id", userMap.get("id").toString());
+		detailMap.put("id", userMap.get("id").toString());
 		
-		System.out.println(infoMap);
-//		employeeMapper.saveInfo(infoMap);
-//		logger.info("resultMap, {}", resultMap);
-//		employeeMapper.saveDetail(detailMap);
+		employeeMapper.saveInfo(infoMap);
+		employeeMapper.saveDetailInfo(detailMap);
 		
 		//이미지 저장
 		if (img != null) {
-			logger.info("이미지 존재");
-
 			try {
 				// 파일 경로 생성
 				File directory = new File(uploadDir);
@@ -134,14 +130,14 @@ public class EmployeeService {
 				Map<String, Object> imgMap = new HashMap<String, Object>();
 				imgMap.put("originFileName", img.getOriginalFilename());
 				imgMap.put("encFileName", fileName);
-				imgMap.put("id", infoMap.get("id").toString());
+				imgMap.put("id", userMap.get("id").toString());
 				String filePath = uploadDir + File.separator + fileName;
 				
 				// 파일 객체 생성
 				File dest = new File(filePath);
 				// 이미지 파일을 생성한 파일 객체로 저장
 				img.transferTo(dest);
-//				employeeMapper.saveImgInfo(imgMap);
+				employeeMapper.saveImgInfo(imgMap);
 				
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -151,6 +147,7 @@ public class EmployeeService {
 		}
 		
 		result.put("msg", msg);
+		result.put("id", userMap.get("id").toString());
 		return result;
 	}
 	

@@ -15,7 +15,7 @@ public interface EmployeeMapper {
 	
 	void saveInfo(Map<String,Object> param);
 	
-//	void saveDetail(Map<String,Object> param);
-	
-//	void saveImgInfo(Map<String,Object> param);
+	void saveDetailInfo(Map<String,Object> param);
+
+	void saveImgInfo(Map<String,Object> param);
 }
