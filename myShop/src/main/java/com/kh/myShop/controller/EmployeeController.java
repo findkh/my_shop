@@ -1,9 +1,19 @@
 package com.kh.myShop.controller;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +24,9 @@ import com.kh.myShop.service.EmployeeService;
 
 @RestController
 public class EmployeeController {
+	
+	@Value("${file.upload-dir}")
+	private String uploadDir;
 
 	@Autowired
 	EmployeeService employeeService;
@@ -35,7 +48,33 @@ public class EmployeeController {
 	public Map<String, Object> saveEmployee(@RequestParam("info") String info,
 											@RequestParam("detail") String detail,
 											@RequestParam(value = "img", required = false) MultipartFile img) {
-		System.out.println("호출됨");
-	    return employeeService.saveEmployee(info, detail, img);
+	return employeeService.saveEmployee(info, detail, img);
+	}
+	
+	//직원 상세 조회
+	@GetMapping("/getEmployeeInfo")
+	public Map<String, Object> getEmployeeInfo(@RequestParam String id) throws Exception{
+		return employeeService.getEmployeeInfo(id);
+	}
+	
+	//직원 사진 반환
+	@GetMapping("/getEmployeeImg")
+	public ResponseEntity<byte[]> getEmployeeImg(@RequestParam("fileName") String fileName) throws IOException {
+		Path fileStorageLocation = Paths.get(uploadDir);
+		Path filePath = fileStorageLocation.resolve(fileName).normalize();
+		Resource resource = new UrlResource(filePath.toUri());
+		
+		if (resource.exists() && resource.isReadable()) {
+			byte[] imageBytes = resource.getInputStream().readAllBytes();
+			
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.IMAGE_JPEG);
+			headers.setContentLength(imageBytes.length);
+			headers.setContentDispositionFormData("filename", fileName);
+			
+			return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 }

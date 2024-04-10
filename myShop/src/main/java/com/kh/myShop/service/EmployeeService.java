@@ -58,6 +58,7 @@ public class EmployeeService {
 											@RequestParam("detail") String detail,
 											@RequestParam("img") MultipartFile img
 											) {
+		logger.info("saveEmployee 호출");
 		Map<String, Object> result = new HashMap<>();
 		String msg = "success";
 		
@@ -118,6 +119,7 @@ public class EmployeeService {
 		
 		//이미지 저장
 		if (img != null) {
+			logger.info("이미지 존재");
 			try {
 				// 파일 경로 생성
 				File directory = new File(uploadDir);
@@ -148,10 +150,13 @@ public class EmployeeService {
 		
 		result.put("msg", msg);
 		result.put("id", userMap.get("id").toString());
+		logger.info("saveEmployee 종료");
 		return result;
 	}
 	
+	// 직원 코드 생성 메서드
 	public static String generateEmployeeCode() {
+		logger.info("generateEmployeeCode 호출");
 		// 오늘 날짜를 YYYYMMDD 형식으로 가져옴
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 		String today = dateFormat.format(new Date());
@@ -166,6 +171,40 @@ public class EmployeeService {
 		
 		// 오늘 날짜와 랜덤한 숫자와 영어를 섞은 코드를 합쳐서 직원 코드 생성
 		String employeeCode = today + employeeCodeBuilder.toString();
+		logger.info("generateEmployeeCode 종료: {}", employeeCode);
 		return employeeCode;
+	}
+
+	//직원 상세 정보 조회
+	public Map<String, Object> getEmployeeInfo(String id) throws Exception {
+		logger.info("getEmployeeInfo Service 호출: {}", id);
+		Map<String, Object> returnData = new HashMap<>();
+		Map<String, Object> param = new HashMap<>();
+		param.put("id", id);
+		
+		Map<String, Object> result = employeeMapper.getEmployeeInfo(param);
+		
+		if(result != null) {
+			logger.info("result: {}", result);
+			AES256 dec = new AES256();
+			String decryptedJumin = dec.decryptAES256(result.get("jumin_num").toString()).split("-")[0];
+			
+			result.put("phone_number", dec.decryptAES256(result.get("phone_number").toString()));
+			result.put("jumin_num", decryptedJumin);
+			
+			Map<String, Object> img = employeeMapper.getEmployeeImg(result);
+			
+			if(img != null) {
+				logger.info("직원 사진 존재");
+				result.put("employeeImg", img.get("img_name").toString());
+			}
+			
+			returnData.put("result", result);
+		} else {
+			returnData.put("result", "invalid");
+		}
+		
+		logger.info("getEmployeeInfo Service 종료");
+		return returnData;
 	}
 }

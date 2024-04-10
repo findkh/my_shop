@@ -61,4 +61,19 @@
 		)
 	</insert>
 	
+	<select id="getEmployeeInfo" resultType="map" parameterType="map">
+		SELECT 
+			c.user_name, a.id, a.employee_code, a.jumin_num, a.address, a.user_status, a.phone_number, a."comments", a.account_num,
+			b.join_date, b.hire_date, b.start_time, b.end_time, b.wage_type, b.wage, b.job_type, b.working_day
+		FROM employee_info a
+		LEFT OUTER JOIN employment_details b on b.id = a.id
+		LEFT OUTER JOIN user_info c on c.id::varchar = a.id
+		WHERE a.id=#{id}
+	</select>
+	
+	<select id="getEmployeeImg" resultType="map" parameterType="map">
+		SELECT img_name
+		FROM employee_img
+		WHERE id = #{id}
+	</select>
 </mapper>
