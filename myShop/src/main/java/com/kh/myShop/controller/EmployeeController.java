@@ -77,4 +77,13 @@ public class EmployeeController {
 			return ResponseEntity.notFound().build();
 		}
 	}
+	
+	//직원 정보 수정
+	@PostMapping("/employee/updateEmployee")
+	public Map<String, Object> updateEmployee(@RequestParam("info") String info,
+											@RequestParam("detail") String detail,
+											@RequestParam(value = "img", required = false) MultipartFile img) {
+	return employeeService.updateEmployee(info, detail, img);
+	}
+
 }

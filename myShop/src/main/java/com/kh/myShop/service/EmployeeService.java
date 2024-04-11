@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -54,6 +55,7 @@ public class EmployeeService {
 	
 	// 직원 저장 메서드
 	@SuppressWarnings("unchecked")
+	@Transactional
 	public Map<String, Object> saveEmployee(@RequestParam("info") String info,
 											@RequestParam("detail") String detail,
 											@RequestParam("img") MultipartFile img
@@ -61,7 +63,6 @@ public class EmployeeService {
 		logger.info("saveEmployee 호출");
 		Map<String, Object> result = new HashMap<>();
 		String msg = "success";
-		
 		
 		// ObjectMapper를 사용하여 JSON 문자열을 Map으로 변환
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -187,11 +188,13 @@ public class EmployeeService {
 		if(result != null) {
 			logger.info("result: {}", result);
 			AES256 dec = new AES256();
-			String decryptedJumin = dec.decryptAES256(result.get("jumin_num").toString()).split("-")[0];
+			String decryptedJumin1 = dec.decryptAES256(result.get("jumin_num").toString()).split("-")[0];
+			String decryptedJumin2 = dec.decryptAES256(result.get("jumin_num").toString()).split("-")[1];
 			
 			result.put("phone_number", dec.decryptAES256(result.get("phone_number").toString()));
-			result.put("jumin_num", decryptedJumin);
-			
+			result.put("jumin_num1", decryptedJumin1);
+			result.put("jumin_num2", decryptedJumin2);
+			result.remove("jumin_num");
 			Map<String, Object> img = employeeMapper.getEmployeeImg(result);
 			
 			if(img != null) {
@@ -207,4 +210,17 @@ public class EmployeeService {
 		logger.info("getEmployeeInfo Service 종료");
 		return returnData;
 	}
+	
+	//직원 정보 수정
+	@Transactional
+	public Map<String, Object> updateEmployee(@RequestParam("info") String info,
+											@RequestParam("detail") String detail,
+											@RequestParam("img") MultipartFile img
+											) {
+		logger.info("updateEmployee 호출");
+		
+		logger.info("updateEmployee 종료");
+		return null;
+	}
+	
 }
