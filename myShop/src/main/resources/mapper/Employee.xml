@@ -76,4 +76,57 @@
 		FROM employee_img
 		WHERE id = #{id}
 	</select>
+	
+	<update id="updateUser" parameterType="map">
+		UPDATE user_info
+		SET
+			user_status = #{user_status},
+			modified_id = #{_userId},
+			modified_dt = now()
+		WHERE
+			shop_id = #{_shopId} AND id = #{id}
+	</update>
+	
+	<update id="updateInfo" parameterType="map">
+		UPDATE employee_info 
+		SET
+			jumin_num = #{enc_jumin},
+			address = #{address},
+			user_status = #{user_status},
+			phone_number = #{enc_tel},
+			comments = #{comments}, 
+			account_num = #{account_num},
+			modified_id = #{_userId},
+			modified_dt = now()
+		WHERE
+			shop_id = #{_shopId} AND id = #{id}
+	</update>
+	
+	<update id="updateDetailInfo" parameterType="map">
+		UPDATE employment_details
+		SET
+			join_date = #{join_date},
+			hire_date = #{hire_date},
+			start_time = #{start_time}::time,
+			end_time = #{end_time}::time,
+			wage_type = #{wage_type},
+			wage = #{wage}::numeric,
+			job_type = #{job_type},
+			working_day = #{working_day},
+			modified_id = #{_userId},
+			modified_dt = now()
+		WHERE id = #{id}
+	</update>
+	
+	<select id="findEmployeeImg" parameterType="map">
+		SELECT id, img_name
+		FROM employee_img
+		WHERE id = #{id}
+	</select>
+	
+	<delete id="deleteEmployeeImg" parameterType="map">
+		DELETE 
+		FROM employee_img
+		WHERE id = #{id}
+	</delete>
 </mapper>

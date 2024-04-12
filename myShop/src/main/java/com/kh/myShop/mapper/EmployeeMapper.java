@@ -23,4 +23,13 @@ public interface EmployeeMapper {
 	
 	Map<String,Object> getEmployeeImg(Map<String,Object> param);
 	
+	void updateUser(Map<String, Object> param);
+	
+	void updateInfo(Map<String,Object> param);
+	
+	void updateDetailInfo(Map<String,Object> param);
+	
+	Map<String,Object> findEmployeeImg(Map<String,Object> param);
+	
+	void deleteEmployeeImg(Map<String, Object> param);
 }

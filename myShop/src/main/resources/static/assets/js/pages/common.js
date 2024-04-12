@@ -12,8 +12,6 @@ function getCheckedValues() {
 //사진 용량 체크
 function isOverSize(file) {
 	let maxSize = 100 * 1024 * 1024; // 100MB를 바이트 단위로 계산
-	console.log(file.size > maxSize)
-	console.log(file.size, maxSize)
 	return (file.size > maxSize) ? true : false;
 };
 

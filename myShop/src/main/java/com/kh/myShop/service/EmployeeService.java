@@ -212,15 +212,116 @@ public class EmployeeService {
 	}
 	
 	//직원 정보 수정
+	@SuppressWarnings("unchecked")
 	@Transactional
 	public Map<String, Object> updateEmployee(@RequestParam("info") String info,
 											@RequestParam("detail") String detail,
 											@RequestParam("img") MultipartFile img
 											) {
 		logger.info("updateEmployee 호출");
+		Map<String, Object> result = new HashMap<>();
+		String msg = "success";
 		
+		// ObjectMapper를 사용하여 JSON 문자열을 Map으로 변환
+		ObjectMapper objectMapper = new ObjectMapper();
+		Map<String, Object> infoMap = new HashMap<String,Object>();
+		Map<String, Object> detailMap = new HashMap<String,Object>();
+		try {
+			infoMap = objectMapper.readValue(info, Map.class);
+			detailMap = objectMapper.readValue(detail, Map.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("msg", "Error occurred while parsing JSON");
+			return result;
+		}
+		
+		//주민번호 암호화
+		if(!infoMap.get("jumin_num").toString().equals("-")) {
+			AES256 enc = new AES256();
+			try {
+				infoMap.put("enc_jumin", enc.encryptAES256(infoMap.get("jumin_num").toString()));
+			} catch (Exception e) {
+				e.printStackTrace();
+				result.put("msg", "Error occurred while encoder Jumin Number");
+				logger.info("Error occurred while encoder jumin number");
+			}
+		}
+		
+		//전화번호 암호화
+		if(!infoMap.get("tel").toString().isEmpty()) {
+			AES256 enc = new AES256();
+			try {
+				infoMap.put("enc_tel", enc.encryptAES256(infoMap.get("tel").toString()));
+			} catch (Exception e) {
+				e.printStackTrace();
+				result.put("msg", "Error occurred while encoder Jumin Number");
+				logger.info("Error occurred while encoder jumin number");
+			}
+		}
+		
+		Map<String, Object> userMap = new HashMap<String, Object>();
+		userMap.put("user_status", infoMap.get("user_status").toString());
+		
+		employeeMapper.updateUser(userMap);
+		employeeMapper.updateInfo(infoMap);
+		employeeMapper.updateDetailInfo(detailMap);
+		
+		//이미지 저장
+		if (img != null) {
+			logger.info("이미지 존재");
+			try {
+				// 저장된 이미지 조회
+				Map<String, Object> imgResultMap = employeeMapper.findEmployeeImg(infoMap);
+				
+				if (imgResultMap != null) {
+					String imgName = imgResultMap.get("img_name").toString();
+					
+					// 데이터베이스에서 이미지 정보 삭제
+					employeeMapper.deleteEmployeeImg(imgResultMap);
+					
+					// 이미지 파일의 경로를 생성
+					File imgFile = new File(uploadDir, imgName);
+					
+					// 데이터베이스 삭제가 성공적으로 이루어진 후 파일 삭제
+					if (imgFile.exists() && imgFile.isFile()) {
+						if (imgFile.delete()) {
+							logger.info("이미지 파일 삭제 성공");
+						} else {
+							logger.error("이미지 파일 삭제 실패: {}", imgFile);
+						}
+					} else {
+						logger.info("삭제할 파일이 존재하지 않음");
+					}
+				}
+				
+				//새 이미지 파일 저장 로직
+				File directory = new File(uploadDir);
+				if (!directory.exists()) {
+					directory.mkdirs();
+				}
+				
+				String fileName = UUID.randomUUID().toString() + "_" + img.getOriginalFilename();
+				Map<String, Object> imgMap = new HashMap<>();
+				imgMap.put("originFileName", img.getOriginalFilename());
+				imgMap.put("encFileName", fileName);
+				imgMap.put("id", infoMap.get("id").toString());
+				String filePath = uploadDir + File.separator + fileName;
+				
+				File dest = new File(filePath);
+				img.transferTo(dest);
+				employeeMapper.saveImgInfo(imgMap);
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+				result.put("msg", "Error occurred while saving image");
+				return result;
+			}
+		}
+		
+		result.put("msg", msg);
+		result.put("id", infoMap.get("id").toString());
 		logger.info("updateEmployee 종료");
-		return null;
+		return result;
 	}
 	
 }

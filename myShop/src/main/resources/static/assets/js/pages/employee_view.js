@@ -99,18 +99,20 @@ $(document).ready(function() {
 		}
 		
 		let info = {
+			id: id,
 			name: $('#name').val(),
 			jumin_num: $('#jumin1').val() + '-' + $('#jumin2').val(),
 			tel: $('#tel').val(),
 			address: $('#address').val(),
 			account_num: $('#accountNum').val(),
+			user_status: $('#userStatus').val(),
 			comments: $('#employeeComments').val(),
 		};
 		
 		let detail = {
+			id: id,
 			join_date: $('#joinDate').val(),
 			hire_date: $('#hireDate').val(),
-			user_status: $('#userStatus').val(),
 			job_type: $('#jobType').val(),
 			working_day: getCheckedValues(),
 			start_time: $('#startTime').val(),
@@ -121,9 +123,7 @@ $(document).ready(function() {
 		
 		let imageFile = $('#imageFile')[0].files[0];
 		
-		console.log(info)
-		console.log(detail)
-		//saveEmployee(info, detail, imageFile);
+		updateEmployee(info, detail, imageFile);
 	});
 	
 	$('#checkPwd').click(function(){
@@ -190,11 +190,12 @@ function fillData(){
 		});
 	}
 	
-	if(originData.employeeImg != ''){
+	if(originData.employeeImg != '' && originData.employeeImg != undefined){
 		getEmployeeImg(originData.employeeImg);
 	}
 }
 
+//이미지 요청 함수
 function getEmployeeImg(img) {
 	$.ajax({
 		url: '/getEmployeeImg',
@@ -207,6 +208,35 @@ function getEmployeeImg(img) {
 			let blobUrl = URL.createObjectURL(response);
 			let imgElement = document.getElementById('employeeImg');
 			imgElement.src = blobUrl;
+		}
+	});
+}
+
+//직원 저장 함수
+function updateEmployee(info, detail, img) {
+	let formData = new FormData();
+	formData.append('info', JSON.stringify(info));
+	formData.append('detail', JSON.stringify(detail));
+	formData.append('_csrf', csrfParam.value);
+
+	if (img != null && img != undefined) {
+		formData.append('img', img);
+	}
+
+	$.ajax({
+		url: '/employee/updateEmployee',
+		type: 'POST',
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function(response) {
+			if(response.msg == 'success'){
+				alert('저장되었습니다.');
+				window.location.href = `viewEmployeeInfo?id=${response.id}`;
+			}
+		},
+		error: function(xhr, status, error) {
+			console.error(xhr.responseText);
 		}
 	});
 }
