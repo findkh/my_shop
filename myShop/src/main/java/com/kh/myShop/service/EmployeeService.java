@@ -324,4 +324,8 @@ public class EmployeeService {
 		return result;
 	}
 	
+	public Boolean getJuminNum(Map<String, Object> passwordMap){
+		String pwd = passwordMap.get("password").toString();
+		return true;
+	}
 }

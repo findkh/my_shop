@@ -126,9 +126,19 @@ $(document).ready(function() {
 		updateEmployee(info, detail, imageFile);
 	});
 	
-	$('#checkPwd').click(function(){
-		console.log('주민번호 클릭')
-	})
+	$('#getJuminNum').click(function(){
+		if($('#pwd1').val() != $('#pwd2').val()){
+			alert('비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
+			return false;
+		} else {
+			getJuminNum($('#pwd1').val());
+		}
+	});
+	
+	$('#cancelModal').click(function(){
+		$('#pwd1').val('');
+		$('#pwd2').val('');
+	});
 });
 
 function getEmployeeInfo(id) {
@@ -232,7 +242,7 @@ function updateEmployee(info, detail, img) {
 		success: function(response) {
 			if(response.msg == 'success'){
 				alert('저장되었습니다.');
-				window.location.href = `viewEmployeeInfo?id=${response.id}`;
+//				window.location.href = `viewEmployeeInfo?id=${response.id}`;
 			}
 		},
 		error: function(xhr, status, error) {
@@ -240,3 +250,37 @@ function updateEmployee(info, detail, img) {
 		}
 	});
 }
+
+//비밀번호 체크 확인 함수
+function getJuminNum(juminNum) {
+	$.ajax({
+		url: '/employee/getJuminNum',
+		type: 'POST',
+		contentType: 'application/json',
+		data: JSON.stringify({ 'password': juminNum }),
+		headers: { 'X-XSRF-TOKEN': csrfParam.value },
+		success: function(response) {
+			alert('Password sent successfully!');
+		},
+		error: function(xhr, status, error) {
+			alert('Error: ' + error.message);
+		}
+	});
+}
+//function getJuminNum(juminNum){
+//    $.ajax({
+//        url: '/employee/getJuminNum',
+//        type: 'POST',
+//        contentType: 'application/json',
+//        data: JSON.stringify({ 'password': juminNum }),
+//        beforeSend: function(xhr) {
+//            xhr.setRequestHeader('X-CSRF-TOKEN', csrfParam.value);
+//        },
+//        success: function(response) {
+//            alert('Password sent successfully!');
+//        },
+//        error: function(xhr, status, error) {
+//            alert('Error: ' + xhr.responseJSON.message);
+//        }
+//    });
+//}

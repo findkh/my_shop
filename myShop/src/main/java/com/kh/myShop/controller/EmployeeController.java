@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -83,7 +84,12 @@ public class EmployeeController {
 	public Map<String, Object> updateEmployee(@RequestParam("info") String info,
 											@RequestParam("detail") String detail,
 											@RequestParam(value = "img", required = false) MultipartFile img) {
-	return employeeService.updateEmployee(info, detail, img);
+		return employeeService.updateEmployee(info, detail, img);
 	}
-
+	
+	//주민번호 뒷자리 확인
+	@PostMapping("/employee/getJuminNum")
+	public Boolean getJuminNum(@RequestBody Map<String, Object> passwordMap) {
+		return employeeService.getJuminNum(passwordMap);
+	}
 }
