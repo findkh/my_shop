@@ -23,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.myShop.service.EmployeeService;
 
+import jakarta.servlet.http.HttpSession;
+
 @RestController
 public class EmployeeController {
 	
@@ -89,7 +91,7 @@ public class EmployeeController {
 	
 	//주민번호 뒷자리 확인
 	@PostMapping("/employee/getJuminNum")
-	public Boolean getJuminNum(@RequestBody Map<String, Object> passwordMap) {
-		return employeeService.getJuminNum(passwordMap);
+	public Boolean getJuminNum(@RequestBody Map<String, Object> passwordMap, HttpSession session) {
+		return employeeService.getJuminNum(passwordMap, session);
 	}
 }

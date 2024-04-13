@@ -14,6 +14,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +27,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.myShop.mapper.EmployeeMapper;
 import com.kh.myShop.util.AES256;
+
+import jakarta.servlet.http.HttpSession;
 
 @Service
 public class EmployeeService {
@@ -324,8 +331,21 @@ public class EmployeeService {
 		return result;
 	}
 	
-	public Boolean getJuminNum(Map<String, Object> passwordMap){
+	//비밀번호 확인 로직
+	public Boolean getJuminNum(Map<String, Object> passwordMap, HttpSession session){
 		String pwd = passwordMap.get("password").toString();
-		return true;
+		PasswordEncoder pwdEnc = new BCryptPasswordEncoder();
+		return pwdEnc.matches(pwd, getCurrentUser().getPassword());
+	}
+	
+	//로그인 유저 정보 얻는 메서드
+	public UserDetails getCurrentUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null && authentication.isAuthenticated() &&
+			!(authentication.getPrincipal() instanceof String)) {
+			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+			return userDetails;
+		}
+		return null;
 	}
 }

@@ -242,7 +242,7 @@ function updateEmployee(info, detail, img) {
 		success: function(response) {
 			if(response.msg == 'success'){
 				alert('저장되었습니다.');
-//				window.location.href = `viewEmployeeInfo?id=${response.id}`;
+				window.location.href = `viewEmployeeInfo?id=${response.id}`;
 			}
 		},
 		error: function(xhr, status, error) {
@@ -260,27 +260,18 @@ function getJuminNum(juminNum) {
 		data: JSON.stringify({ 'password': juminNum }),
 		headers: { 'X-XSRF-TOKEN': csrfParam.value },
 		success: function(response) {
-			alert('Password sent successfully!');
+			if(response){
+				alert('확인 되었습니다.');
+				 $('#jumin2').prop('type', 'text');
+				$('#cancelModal').click();
+			} else {
+				alert('비밀번호가 틀렸습니다. 다시 시도해주세요.');
+				$('#pwd1').val('');
+				$('#pwd2').val('');
+			}
 		},
 		error: function(xhr, status, error) {
 			alert('Error: ' + error.message);
 		}
 	});
 }
-//function getJuminNum(juminNum){
-//    $.ajax({
-//        url: '/employee/getJuminNum',
-//        type: 'POST',
-//        contentType: 'application/json',
-//        data: JSON.stringify({ 'password': juminNum }),
-//        beforeSend: function(xhr) {
-//            xhr.setRequestHeader('X-CSRF-TOKEN', csrfParam.value);
-//        },
-//        success: function(response) {
-//            alert('Password sent successfully!');
-//        },
-//        error: function(xhr, status, error) {
-//            alert('Error: ' + xhr.responseJSON.message);
-//        }
-//    });
-//}
