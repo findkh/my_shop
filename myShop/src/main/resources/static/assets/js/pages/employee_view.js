@@ -122,7 +122,7 @@ $(document).ready(function() {
 		};
 		
 		let imageFile = $('#imageFile')[0].files[0];
-		
+
 		updateEmployee(info, detail, imageFile);
 	});
 	
@@ -138,6 +138,15 @@ $(document).ready(function() {
 	$('#cancelModal').click(function(){
 		$('#pwd1').val('');
 		$('#pwd2').val('');
+	});
+	
+	$('#copyBtn').click(function() {
+		let $input = $('#joinUrl');
+		$input.prop('disabled', false);
+		$input.select();
+		document.execCommand('copy');
+		$input.prop('disabled', true);
+		alert('URL이 클립보드에 복사되었습니다!');
 	});
 });
 
@@ -181,6 +190,7 @@ function fillData(){
 	$('#endTime').val(originData.end_time);
 	$('#wageType').val(originData.wage_type);
 	$('#wage').val(originData.wage);
+	$('#joinUrl').val(originData.joinUrl);
 	
 	let workingDays = originData.working_day.split(',');
 	$.each(workingDays, function(index, day) {

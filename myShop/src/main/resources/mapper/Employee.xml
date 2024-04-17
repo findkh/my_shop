@@ -81,6 +81,7 @@
 		UPDATE user_info
 		SET
 			user_status = #{user_status},
+			birthday = #{birthday},
 			modified_id = #{_userId},
 			modified_dt = now()
 		WHERE

@@ -209,6 +209,7 @@ public class EmployeeService {
 				result.put("employeeImg", img.get("img_name").toString());
 			}
 			
+			result.put("joinUrl", "http://localhost:8080/login?shop_id="+result.get("_shopId").toString()+"&id="+result.get("id").toString());
 			returnData.put("result", result);
 		} else {
 			returnData.put("result", "invalid");

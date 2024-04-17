@@ -23,7 +23,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 					<div class="input-group">
 						<i class='bx bxs-user'></i>
-						<input type="text" placeholder="Username">
+						<input type="text" placeholder="이름">
 					</div>
 					<div class="input-group">
 						<i class='bx bx-mail-send'></i>
@@ -31,13 +31,13 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					</div>
 					<div class="input-group">
 						<i class='bx bxs-lock-alt'></i>
-						<input type="password" placeholder="Password">
+						<input type="password" placeholder="비밀번호">
 					</div>
 					<div class="input-group">
 						<i class='bx bxs-lock-alt'></i>
-						<input type="password" placeholder="Confirm password">
+						<input type="password" placeholder="비밀번호 재입력">
 					</div>
-					<button>Sign up</button>
+					<button>회원가입</button>
 					<p>
 						<span>
 							Already have an account?
@@ -112,9 +112,17 @@ $(document).ready(function() {
 		container.toggleClass('sign-up');
 	}
 
-	setTimeout(() => {
-		container.addClass('sign-in');
-	}, 200);
+	let params = getQueryStringParams();
+
+	if (params.shop_id && params.id) {
+		setTimeout(() => {
+			container.addClass('sign-up');
+		}, 200);
+	} else {
+		setTimeout(() => {
+			container.addClass('sign-in');
+		}, 200);
+	}
 
 	let queryString = window.location.search.substring(1);
 	if(queryString == 'error'){
@@ -123,6 +131,15 @@ $(document).ready(function() {
 		$('#failMsg').css('color', 'red');
 	}
 });
+
+function getQueryStringParams(query) {
+	query = query || window.location.search;
+	var params = new URLSearchParams(query);
+	return {
+		shop_id: params.get('shop_id'),
+		id: params.get('id')
+	};
+}
 </script>
 </body>
 </html>
