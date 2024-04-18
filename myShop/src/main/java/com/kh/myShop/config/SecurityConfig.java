@@ -58,7 +58,7 @@ public class SecurityConfig{
 			// HTTP 요청에 대한 인가 설정
 			.authorizeHttpRequests((authorizeRequests) ->
 				authorizeRequests
-					.requestMatchers("/login/**", "/assets/**").permitAll() // 로그인 및 정적 자원에 대한 접근 허용
+					.requestMatchers("/login/**", "/assets/**", "/signup/**").permitAll() // 로그인 및 정적 자원에 대한 접근 허용
 					.requestMatchers("/employee/**").hasRole("ADMIN")
 					.anyRequest().authenticated() // 그 외 요청에 대해서는 인증 필요
 			)

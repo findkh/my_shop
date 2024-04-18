@@ -3,6 +3,7 @@ package com.kh.myShop.controller;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -93,5 +94,22 @@ public class EmployeeController {
 	@PostMapping("/employee/getJuminNum")
 	public Boolean getJuminNum(@RequestBody Map<String, Object> passwordMap, HttpSession session) {
 		return employeeService.getJuminNum(passwordMap, session);
+	}
+	
+	//직원 회원 가입
+	@SuppressWarnings("unchecked")
+	@PostMapping("/signup")
+	public Map<String,Object> signup(@RequestParam String email,
+									 @RequestParam String password,
+									 @RequestParam String shop_id,
+									 @RequestParam String id) {
+		System.out.println("호출");
+		Map<String,Object> result = new HashMap<String, Object>();
+
+		if (email.isEmpty() || password.isEmpty() || shop_id.isEmpty() || id.isEmpty()) {
+			return (Map<String, Object>) result.put("msg", "필수 필드가 누락되었습니다.");
+		}
+
+		return (Map<String, Object>) result.put("msg", "success");
 	}
 }
