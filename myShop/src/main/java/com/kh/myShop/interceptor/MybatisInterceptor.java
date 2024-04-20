@@ -42,12 +42,14 @@ public class MybatisInterceptor implements Interceptor {
 		// 보안 컨텍스트에서 사용자 인증 정보를 가져와서 _userid 및 _shopId 파라미터를 추가
 		if (SecurityContextHolder.getContext().getAuthentication() != null) {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			LoginEntity user = (LoginEntity) authentication.getPrincipal();
-			String userName = authentication.getName();
-
-			if (param instanceof HashMap) {
-				((HashMap) param).put("_userId", userName);
-				((HashMap) param).put("_shopId", user.getShop_id());
+			if (authentication != null && authentication.getPrincipal() instanceof LoginEntity) {
+				LoginEntity user = (LoginEntity) authentication.getPrincipal();
+				String userName = authentication.getName();
+	
+				if (param instanceof HashMap) {
+					((HashMap) param).put("_userId", userName);
+					((HashMap) param).put("_shopId", user.getShop_id());
+				}
 			}
 		}
 		return invocation.proceed(); // 메서드를 계속 진행

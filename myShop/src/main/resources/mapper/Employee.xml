@@ -130,4 +130,21 @@
 		FROM employee_img
 		WHERE id = #{id}
 	</delete>
+	
+	<update id="updateUserByEmployee" parameterType="map">
+		UPDATE user_info
+		SET
+			user_id = #{email},
+			password = #{encPwd},
+			modified_id = #{email},
+			modified_dt = now()
+		WHERE
+			shop_id = #{shop_id} AND id = #{id}::integer
+	</update>
+	
+	<select id="checkUserId" parameterType="map">
+		SELECT count(*)
+		FROM user_info
+		WHERE user_id = #{email}
+	</select>
 </mapper>

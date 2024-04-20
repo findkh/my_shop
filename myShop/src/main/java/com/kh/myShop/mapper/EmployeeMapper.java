@@ -32,4 +32,8 @@ public interface EmployeeMapper {
 	Map<String,Object> findEmployeeImg(Map<String,Object> param);
 	
 	void deleteEmployeeImg(Map<String, Object> param);
+	
+	void updateUserByEmployee(Map<String, Object> param);
+	
+	Map<String,Object> checkUserId(Map<String, Object> param);
 }

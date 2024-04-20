@@ -349,4 +349,40 @@ public class EmployeeService {
 		}
 		return null;
 	}
+	
+	@Transactional
+	public Map<String, Object> signup(@RequestParam String email,
+									  @RequestParam String password,
+									  @RequestParam String shop_id,
+									  @RequestParam String id) {
+
+		Map<String, Object> result = new HashMap<String, Object>();
+		String msg = "success";
+		
+		if (email.isEmpty() || password.isEmpty() || shop_id.isEmpty() || id.isEmpty()) {
+			msg = "필수 필드가 누락되었습니다.";
+		}
+		
+		Map<String,Object> param = new HashMap<String, Object>();
+		BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
+		
+		param.put("email", email);
+		param.put("shop_id", shop_id);
+		param.put("id", id);
+		param.put("encPwd", enc.encode(password));
+		
+		Map<String,Object> check = employeeMapper.checkUserId(param);
+
+		if(Integer.parseInt(check.get("count").toString()) > 0) {
+			msg = "가입된 이메일 입니다.";
+		} else {
+			employeeMapper.updateUserByEmployee(param);
+		}
+		
+		
+		result.put("msg", msg);
+		
+		return result;
+	}
+	
 }
