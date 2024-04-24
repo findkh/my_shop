@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kh.myShop.login.LoginEntity;
 import com.kh.myShop.mapper.EmployeeMapper;
 import com.kh.myShop.util.AES256;
 
@@ -385,4 +386,50 @@ public class EmployeeService {
 		return result;
 	}
 	
+	//직원이 자기 정보 저회
+	public Map<String, Object> getEmployeeInfoByEmployee() throws Exception {
+		String id = "";
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null && authentication.getPrincipal() instanceof LoginEntity) {
+			LoginEntity loginEntity = (LoginEntity) authentication.getPrincipal();
+			id = loginEntity.getId();
+			System.out.println("ID 값: " + id);
+		} else {
+			System.out.println("인증 정보가 올바르지 않습니다.");
+		}
+		
+		logger.info("getEmployeeInfoByEmployee Service 호출 로그인 id: {}", id);
+		
+		Map<String, Object> returnData = new HashMap<>();
+		Map<String, Object> param = new HashMap<>();
+		param.put("id", id);
+		
+		Map<String, Object> result = employeeMapper.getEmployeeInfo(param);
+		
+		if(result != null) {
+			logger.info("result: {}", result);
+			AES256 dec = new AES256();
+			String decryptedJumin1 = dec.decryptAES256(result.get("jumin_num").toString()).split("-")[0];
+			String decryptedJumin2 = dec.decryptAES256(result.get("jumin_num").toString()).split("-")[1];
+			
+			result.put("phone_number", dec.decryptAES256(result.get("phone_number").toString()));
+			result.put("jumin_num1", decryptedJumin1);
+			result.put("jumin_num2", decryptedJumin2);
+			result.remove("jumin_num");
+			Map<String, Object> img = employeeMapper.getEmployeeImg(result);
+			
+			if(img != null) {
+				logger.info("직원 사진 존재");
+				result.put("employeeImg", img.get("img_name").toString());
+			}
+			
+			returnData.put("result", result);
+		} else {
+			returnData.put("result", "invalid");
+		}
+		
+		logger.info("getEmployeeInfo Service 종료");
+		return returnData;
+	}
 }

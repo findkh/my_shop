@@ -12,6 +12,7 @@ import lombok.Data;
 @Data
 public class LoginEntity implements UserDetails {
 	private static final long serialVersionUID = 1L;
+	private String id;
 	private String user_id;
 	private String password;
 	private String user_name;
@@ -68,5 +69,13 @@ public class LoginEntity implements UserDetails {
 
 	public void setUser_status(String user_status) {
 		this.user_status = user_status;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getId() {
+		return this.id;
 	}
 }

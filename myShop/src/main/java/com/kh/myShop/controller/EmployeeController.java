@@ -91,7 +91,7 @@ public class EmployeeController {
 	}
 	
 	//주민번호 뒷자리 확인
-	@PostMapping("/employee/getJuminNum")
+	@PostMapping("/common/getJuminNum")
 	public Boolean getJuminNum(@RequestBody Map<String, Object> passwordMap, HttpSession session) {
 		return employeeService.getJuminNum(passwordMap, session);
 	}
@@ -103,5 +103,10 @@ public class EmployeeController {
 									 @RequestParam String shop_id,
 									 @RequestParam String id) {
 		return employeeService.signup(email, password, shop_id, id);
+	}
+	
+	@GetMapping("/getEmployeeInfoByEmployee")
+	public Map<String, Object> getEmployeeInfoByEmployee() throws Exception{
+		return employeeService.getEmployeeInfoByEmployee();
 	}
 }

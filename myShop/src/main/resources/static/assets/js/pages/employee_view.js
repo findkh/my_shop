@@ -264,7 +264,7 @@ function updateEmployee(info, detail, img) {
 //비밀번호 체크 확인 함수
 function getJuminNum(juminNum) {
 	$.ajax({
-		url: '/employee/getJuminNum',
+		url: '/common/getJuminNum',
 		type: 'POST',
 		contentType: 'application/json',
 		data: JSON.stringify({ 'password': juminNum }),
