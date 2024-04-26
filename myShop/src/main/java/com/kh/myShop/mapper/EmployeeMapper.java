@@ -36,4 +36,6 @@ public interface EmployeeMapper {
 	void updateUserByEmployee(Map<String, Object> param);
 	
 	Map<String,Object> checkUserId(Map<String, Object> param);
+	
+	Map<String,Object> getQrCode(Map<String, Object> param);
 }

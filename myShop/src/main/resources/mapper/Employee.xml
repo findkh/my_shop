@@ -147,4 +147,10 @@
 		FROM user_info
 		WHERE user_id = #{email}
 	</select>
+	
+	<select id="getQrCode" parameterType="map">
+		SELECT employee_code
+		FROM employee_info
+		WHERE id = #{id}
+	</select>
 </mapper>

@@ -105,8 +105,15 @@ public class EmployeeController {
 		return employeeService.signup(email, password, shop_id, id);
 	}
 	
+	//정보 조회 by 직원
 	@GetMapping("/getEmployeeInfoByEmployee")
 	public Map<String, Object> getEmployeeInfoByEmployee() throws Exception{
 		return employeeService.getEmployeeInfoByEmployee();
+	}
+	
+	//직원 대시보드 정보
+	@GetMapping("/getDashBoardInfoByEmployee")
+	public Map<String, Object> getDashBoardInfoByEmployee() throws Exception{
+		return employeeService.getDashBoardInfoByEmployee();
 	}
 }

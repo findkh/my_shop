@@ -386,7 +386,7 @@ public class EmployeeService {
 		return result;
 	}
 	
-	//직원이 자기 정보 저회
+	//직원이 자기 정보 조회
 	public Map<String, Object> getEmployeeInfoByEmployee() throws Exception {
 		String id = "";
 		
@@ -430,6 +430,36 @@ public class EmployeeService {
 		}
 		
 		logger.info("getEmployeeInfo Service 종료");
+		return returnData;
+	}
+	
+	public Map<String, Object> getDashBoardInfoByEmployee() throws Exception {
+		String id = "";
+		String userName = "";
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null && authentication.getPrincipal() instanceof LoginEntity) {
+			LoginEntity loginEntity = (LoginEntity) authentication.getPrincipal();
+			id = loginEntity.getId();
+			userName = loginEntity.getUser_name();
+			System.out.println("ID 값: " + id);
+		} else {
+			System.out.println("인증 정보가 올바르지 않습니다.");
+		}
+		
+		logger.info("getDashBoardInfoByEmployee Service 호출 로그인 id: {}", id);
+		
+		Map<String, Object> returnData = new HashMap<String, Object>();
+		Map<String, Object> param = new HashMap<String, Object>();
+		Map<String, Object> userInfo = new HashMap<String, Object>();
+		
+		userInfo.put("userName", userName);
+		returnData.put("userInfo", userInfo);
+		
+		param.put("id", id);
+		Map<String, Object> qrCodeStr = employeeMapper.getQrCode(param);
+		returnData.put("code", qrCodeStr);
+		
 		return returnData;
 	}
 }
