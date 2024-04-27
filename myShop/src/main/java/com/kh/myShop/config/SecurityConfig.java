@@ -13,6 +13,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.kh.myShop.handler.CustomAuthenticationSuccessHandler;
 import com.kh.myShop.service.LoginService;
 
 @Configuration
@@ -21,6 +22,9 @@ public class SecurityConfig{
 	
 	@Autowired
 	private LoginService loginService;
+	
+	@Autowired
+	private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
 	// BCryptPasswordEncoder 빈을 생성하는 메서드
 	@Bean
@@ -67,10 +71,10 @@ public class SecurityConfig{
 			.formLogin((formLogin) ->
 				formLogin
 					.loginPage("/login") // 로그인 페이지 설정
-					.usernameParameter("user_id") 
-					.passwordParameter("password") 
-					.loginProcessingUrl("/login-proc") 
-					.defaultSuccessUrl("/", true) // 로그인 성공 시 기본 URL 설정
+					.usernameParameter("user_id")
+					.passwordParameter("password")
+					.loginProcessingUrl("/login-proc")
+					.successHandler(customAuthenticationSuccessHandler)
 					.failureHandler(authenticationFailureHandler()) // 인증 실패 시 핸들러 설정
 			)
 			// 로그아웃 설정

@@ -34,4 +34,9 @@ public class ViewController {
 	public String employeeInfo() {
 		return "contents/employee_Info";
 	}
+	
+	@GetMapping("/commute_mng")
+	public String commuteMng() {
+		return "contents/commute_mng";
+	}
 }

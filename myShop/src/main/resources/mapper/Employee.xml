@@ -153,4 +153,13 @@
 		FROM employee_info
 		WHERE id = #{id}
 	</select>
+	
+	<insert id="saveCommute" parameterType="map">
+		INSERT INTO employee_commute(
+			shop_id, employee_code, attendance_date, creatd_id, created_dt, modified_id, modified_dt
+		) 
+		VALUES(
+			#{_shopId}, #{qrcode}, 
+		)
+	</insert>
 </mapper>

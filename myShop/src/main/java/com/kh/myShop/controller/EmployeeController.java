@@ -3,7 +3,6 @@ package com.kh.myShop.controller;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -115,5 +114,11 @@ public class EmployeeController {
 	@GetMapping("/getDashBoardInfoByEmployee")
 	public Map<String, Object> getDashBoardInfoByEmployee() throws Exception{
 		return employeeService.getDashBoardInfoByEmployee();
+	}
+	
+	//출퇴근 기록 저장
+	@PostMapping("/saveCommute")
+	public Map<String,Object> saveCommute(@RequestBody Map<String, Object> commuteMap) {
+		return employeeService.saveCommute(commuteMap);
 	}
 }

@@ -38,4 +38,6 @@ public interface EmployeeMapper {
 	Map<String,Object> checkUserId(Map<String, Object> param);
 	
 	Map<String,Object> getQrCode(Map<String, Object> param);
+	
+	void saveCommute(Map<String, Object> param);
 }

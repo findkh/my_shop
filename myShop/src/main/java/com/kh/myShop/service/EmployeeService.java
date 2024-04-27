@@ -21,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -461,5 +462,22 @@ public class EmployeeService {
 		returnData.put("code", qrCodeStr);
 		
 		return returnData;
+	}
+	
+	public Map<String,Object> saveCommute(Map<String, Object> commuteMap) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		String msg = "success";
+		logger.info("saveCommute Service 호출");
+		
+		try {
+			employeeMapper.saveCommute(commuteMap);
+		} catch(Exception e){
+			e.printStackTrace();
+			msg = "fail";
+		}
+		
+		result.put("msg", msg);
+		logger.info("saveCommute Service 종료");
+		return result;
 	}
 }
