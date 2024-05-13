@@ -3,6 +3,8 @@ package com.kh.myShop.service;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +23,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -480,4 +481,23 @@ public class EmployeeService {
 		logger.info("saveCommute Service 종료");
 		return result;
 	}
+	
+	// 
+    public List<Map<String, Object>> getCommuteList() {
+        logger.info("getCommuteList Service 호출");
+
+        // 오늘 날짜를 가져와서 YYYY-MM-DD 형식으로 변환
+        LocalDate today = LocalDate.now();
+        String formattedDate = today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        // 파라미터 맵에 오늘 날짜를 넣어줌
+        Map<String,Object> param = new HashMap<>();
+        param.put("today", formattedDate);
+
+        // 맵을 사용하여 쿼리 실행
+        List<Map<String, Object>> result = employeeMapper.getCommuteList(param);
+
+        logger.info("result: {}", result);
+        return result;
+    }
 }

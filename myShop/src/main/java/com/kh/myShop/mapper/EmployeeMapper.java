@@ -40,4 +40,6 @@ public interface EmployeeMapper {
 	Map<String,Object> getQrCode(Map<String, Object> param);
 	
 	void saveCommute(Map<String, Object> param);
+	
+	List<Map<String, Object>> getCommuteList(Map<String, Object> param);
 }

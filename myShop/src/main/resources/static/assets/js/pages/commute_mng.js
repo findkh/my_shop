@@ -1,20 +1,23 @@
 $(document).ready(function() {
-	const employeeGrid = new tui.Grid({
-		el: document.getElementById('employeeGrid'),
+	const commuteGrid = new tui.Grid({
+		el: document.getElementById('commuteGrid'),
 		data: [],
 		scrollX: false,
 		scrollY: true,
 		rowHeaders: ['rowNum'],
 		columns: [
-			{ header: '구분', name: 'a'},
-			{ header: '이름', name: 'user_name', className: 'column_click'},
-			{ header: '재직상태', name: 'status_nm', className: 'column_click' },
+			{ header: '구분', name: 'commute_type'},
+			{ header: '이름', name: 'user_name'},
+			{ header: '시간', name: 'checked_time'},
 		]
 	});
-
+	
 	function onScanSuccess(qrCodeMessage) {
 		$('#emplyeeCode').val(qrCodeMessage);
-		$('#attendanceBtn').click();
+		if(qrCodeMessage != ''){
+			$('#attendanceBtn').click();
+		}
+		
 	}
 
 	function onScanError(errorMessage) {
@@ -25,12 +28,48 @@ $(document).ready(function() {
 		'qr-reader', { fps: 10, qrbox: 250 });
 
 	html5QrcodeScanner.render(onScanSuccess, onScanError);
+	
+	$('img[src^="data:image/svg+xml"]').remove();
 
 	$('#attendanceBtn').click(function(){
+		let commuteData = {
+			type_str: $('#typeStr').val(),
+			qrcode: $('#emplyeeCode').val(),
+		};
+	
+		$.ajax({
+			url: '/employee/saveCommute',
+			type: 'POST',
+			contentType: 'application/json',
+			headers: { 'X-XSRF-TOKEN': csrfParam.value },
+			data: JSON.stringify(commuteData), // Serialize data to JSON
+			success: function(response) {
+				if(response.msg == 'success'){
+					$('#emplyeeCode').val('');
+					getCommuteList();
+				}
+			},
+			error: function(xhr, status, error) {
+				console.error(xhr.responseText);
+			}
+		});
+	});
 
-	})
+	function getCommuteList(){
+		$.ajax({
+			url: '/getCommuteList',
+			type: 'GET',
+			success: function(response) {
+				if(response.length > 0){
+						commuteGrid.resetData(response);
+					}
+			},
+			error: function(xhr, status, error) {
+				console.error(xhr.responseText);
+			}
+		});
+	}
 
-
-
+	getCommuteList();
 });
 

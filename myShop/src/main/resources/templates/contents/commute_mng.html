@@ -16,6 +16,7 @@ layout:decorate="~{layout/default}">
 					<div class="col-12">
 						<div class="card">
 							<div class="card-body">
+								<input type="hidden" id='csrfParam' th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 								<div class="row align-items-center" style="margin-bottom:10px;">
 										<h3 class="card-title mb-0">출퇴근 등록</h3>
 								</div>
@@ -24,7 +25,11 @@ layout:decorate="~{layout/default}">
 									<tbody>
 										<tr>
 											<th>구분</th>
-											<td><select><option>출근</option><option>퇴근</option></select></td>
+											<td><select id="typeStr">
+													<option value="in">출근</option>
+													<option value="out">퇴근</option>
+												</select>
+											</td>
 											<th scope="col">직원코드</th>
 											<td><input id="emplyeeCode"></td>
 											<td><button type="button" id="attendanceBtn">등록</button></td>
@@ -32,7 +37,7 @@ layout:decorate="~{layout/default}">
 									</tbody>
 								</table>
 
-								<div id="employeeGrid"></div>
+								<div id="commuteGrid"></div>
 							</div>
 						</div>
 					</div>

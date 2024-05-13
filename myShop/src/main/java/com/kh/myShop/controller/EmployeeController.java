@@ -117,8 +117,13 @@ public class EmployeeController {
 	}
 	
 	//출퇴근 기록 저장
-	@PostMapping("/saveCommute")
+	@PostMapping("/employee/saveCommute")
 	public Map<String,Object> saveCommute(@RequestBody Map<String, Object> commuteMap) {
 		return employeeService.saveCommute(commuteMap);
+	}
+	
+	@GetMapping("/getCommuteList")
+	public List<Map<String, Object>> getCommuteList(){
+		return employeeService.getCommuteList();
 	}
 }

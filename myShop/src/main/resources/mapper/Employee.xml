@@ -156,10 +156,22 @@
 	
 	<insert id="saveCommute" parameterType="map">
 		INSERT INTO employee_commute(
-			shop_id, employee_code, attendance_date, creatd_id, created_dt, modified_id, modified_dt
+			shop_id, type_str, employee_code, checked_time, creatd_id, created_dt, modified_id, modified_dt
 		) 
 		VALUES(
-			#{_shopId}, #{qrcode}, 
+			#{_shopId}, #{type_str}, #{qrcode}, now(), #{_userId}, now(), #{_userId}, now()
 		)
 	</insert>
+	
+	<select id="getCommuteList" resultType="map" parameterType="map">
+		SELECT CASE
+			WHEN a.type_str = 'in' THEN '출근'
+			WHEN a.type_str = 'out' THEN '퇴근'
+			END AS commute_type, 
+			c.user_name, TO_CHAR(a.checked_time, 'YYYY-MM-DD HH24:MI:SS') AS checked_time
+		FROM employee_commute a
+		left outer join employee_info b on b.employee_code = a.employee_code
+		left outer join user_info c on c.id::varchar = b.id::varchar
+		WHERE DATE(checked_time)::varchar = #{today} and a.shop_id = #{_shopId}
+	</select>
 </mapper>
