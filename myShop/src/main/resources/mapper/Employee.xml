@@ -170,8 +170,14 @@
 			END AS commute_type, 
 			c.user_name, TO_CHAR(a.checked_time, 'YYYY-MM-DD HH24:MI:SS') AS checked_time
 		FROM employee_commute a
-		left outer join employee_info b on b.employee_code = a.employee_code
-		left outer join user_info c on c.id::varchar = b.id::varchar
+		LEFT OUTER JOIN employee_info b on b.employee_code = a.employee_code
+		LEFT OUTER JOIN user_info c on c.id::varchar = b.id::varchar
 		WHERE DATE(checked_time)::varchar = #{today} and a.shop_id = #{_shopId}
+	</select>
+	
+	<select id="checkCommute" resultType="map" parameterType="map">
+		SELECT count(*)
+		FROM employee_commute
+		WHERE DATE(checked_time)::varchar = #{today} and shop_id = #{_shopId} and type_str=#{type_str} and employee_code = #{qrcode}
 	</select>
 </mapper>

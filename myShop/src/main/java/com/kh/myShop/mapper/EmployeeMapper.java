@@ -41,5 +41,7 @@ public interface EmployeeMapper {
 	
 	void saveCommute(Map<String, Object> param);
 	
+	Map<String, Object> checkCommute(Map<String, Object> param);
+	
 	List<Map<String, Object>> getCommuteList(Map<String, Object> param);
 }

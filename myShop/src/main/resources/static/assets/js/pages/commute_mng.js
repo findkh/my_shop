@@ -47,6 +47,10 @@ $(document).ready(function() {
 				if(response.msg == 'success'){
 					$('#emplyeeCode').val('');
 					getCommuteList();
+				} else if(response.msg == 'fail'){
+					alert('처리 실패')
+				} else {
+					$('#emplyeeCode').val('');
 				}
 			},
 			error: function(xhr, status, error) {

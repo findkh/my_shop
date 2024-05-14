@@ -465,39 +465,51 @@ public class EmployeeService {
 		return returnData;
 	}
 	
+	@Transactional
 	public Map<String,Object> saveCommute(Map<String, Object> commuteMap) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		String msg = "success";
 		logger.info("saveCommute Service 호출");
 		
 		try {
-			employeeMapper.saveCommute(commuteMap);
+			//중복 체크 로직
+			LocalDate today = LocalDate.now();
+			String formattedDate = today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			commuteMap.put("today", formattedDate);
+			Map<String, Object> checkResult = employeeMapper.checkCommute(commuteMap);
+			if(Integer.parseInt(checkResult.get("count").toString()) == 0) {
+				employeeMapper.saveCommute(commuteMap);
+			} else {
+				msg = "none";
+			}
+			
 		} catch(Exception e){
 			e.printStackTrace();
 			msg = "fail";
 		}
 		
 		result.put("msg", msg);
+		
 		logger.info("saveCommute Service 종료");
 		return result;
 	}
 	
 	// 
-    public List<Map<String, Object>> getCommuteList() {
-        logger.info("getCommuteList Service 호출");
-
-        // 오늘 날짜를 가져와서 YYYY-MM-DD 형식으로 변환
-        LocalDate today = LocalDate.now();
-        String formattedDate = today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-        // 파라미터 맵에 오늘 날짜를 넣어줌
-        Map<String,Object> param = new HashMap<>();
-        param.put("today", formattedDate);
-
-        // 맵을 사용하여 쿼리 실행
-        List<Map<String, Object>> result = employeeMapper.getCommuteList(param);
-
-        logger.info("result: {}", result);
-        return result;
-    }
+	public List<Map<String, Object>> getCommuteList() {
+		logger.info("getCommuteList Service 호출");
+		
+		// 오늘 날짜를 가져와서 YYYY-MM-DD 형식으로 변환
+		LocalDate today = LocalDate.now();
+		String formattedDate = today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		
+		// 파라미터 맵에 오늘 날짜를 넣어줌
+		Map<String,Object> param = new HashMap<>();
+		param.put("today", formattedDate);
+		
+		// 맵을 사용하여 쿼리 실행
+		List<Map<String, Object>> result = employeeMapper.getCommuteList(param);
+		
+		logger.info("result: {}", result);
+		return result;
+	}
 }
