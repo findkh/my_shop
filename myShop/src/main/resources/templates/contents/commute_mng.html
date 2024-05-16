@@ -21,22 +21,34 @@ layout:decorate="~{layout/default}">
 										<h3 class="card-title mb-0">출퇴근 등록</h3>
 								</div>
 								<div id="qr-reader" style="width:100%"></div>
-								<table class="table mb-0">
-									<tbody>
-										<tr>
-											<th>구분</th>
-											<td><select id="typeStr">
+								<div class="row mt-2 mb-2">
+									<div class="col-md-5 col-sm-12">
+										<div class="row align-items-center">
+											<div class="col-md-3">
+												<label>구분</label>
+											</div>
+											<div class="col-md-9">
+												<select class="form-select mr-sm-2" id="typeStr">
 													<option value="in">출근</option>
 													<option value="out">퇴근</option>
 												</select>
-											</td>
-											<th scope="col">직원코드</th>
-											<td><input id="emplyeeCode"></td>
-											<td><button type="button" id="attendanceBtn">등록</button></td>
-										</tr>
-									</tbody>
-								</table>
-
+											</div>
+										</div>
+									</div>
+									<div class="col-md-5 col-sm-12">
+										<div class="row align-items-center">
+											<div class="col-md-3">
+												<label>직원코드</label>
+											</div>
+											<div class="col-md-9">
+												<input class="form-control" id="emplyeeCode">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-2 col-sm-12 mt-2 mt-md-0">
+										<button type="button" class="btn btn-info" id="attendanceBtn">조회</button>
+									</div>
+								</div>
 								<div id="commuteGrid"></div>
 							</div>
 						</div>

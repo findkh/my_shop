@@ -173,6 +173,7 @@
 		LEFT OUTER JOIN employee_info b on b.employee_code = a.employee_code
 		LEFT OUTER JOIN user_info c on c.id::varchar = b.id::varchar
 		WHERE DATE(checked_time)::varchar = #{today} and a.shop_id = #{_shopId}
+		ORDER BY a.checked_time desc
 	</select>
 	
 	<select id="checkCommute" resultType="map" parameterType="map">
