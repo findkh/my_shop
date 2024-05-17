@@ -17601,11 +17601,6 @@ strong {
   stroke-width: 4px;
 }
 
-#visitbylocate .jvectormap-zoomin,
-#visitbylocate .jvectormap-zoomout {
-  display: none;
-}
-
 .chartist-tooltip {
   position: relative;
 }

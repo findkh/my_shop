@@ -181,4 +181,26 @@
 		FROM employee_commute
 		WHERE DATE(checked_time)::varchar = #{today} and shop_id = #{_shopId} and type_str=#{type_str} and employee_code = #{qrcode}
 	</select>
+	
+	<select id="getUserEmployeeCode" resultType="string" parameterType="string">
+		SELECT b.employee_code
+		FROM user_info a
+		LEFT OUTER JOIN employee_info b on a.id::varchar = b.id::varchar
+		WHERE a.user_id = #{userId}
+	</select>
+	
+	<select id="getUserCommuteList" resultType="map" parameterType="map">
+		SELECT CASE
+			WHEN type_str = 'in' THEN '출근'
+			WHEN type_str = 'out' THEN '퇴근'
+			END AS commute_type, 
+			TO_CHAR(checked_time, 'YYYY-MM-DD HH24:MI:SS') AS checked_time
+		FROM employee_commute
+		WHERE 
+			TO_CHAR(checked_time, 'YYYY-MM') = #{year-month}::varchar and
+			shop_id = #{_shopId} and 
+			employee_code = #{employeeCode}
+		ORDER BY checked_time desc
+	</select>
+	
 </mapper>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/default}">
+
+	<th:block layout:fragment="head">
+		<th:block th:insert="~{fragments/head :: head}"></th:block>
+	</th:block>
+	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+		<th:block layout:fragment="header" th:insert="~{@{/fragments/header}}"></th:block>
+		<th:block layout:fragment="sidebar" th:insert="~{@{/fragments/sidebar}}"></th:block>
+		<div class="page-wrapper">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="row align-items-center" style="margin-bottom:10px;">
+									<div class="col-md-6 ms-auto">
+										<h3 class="card-title mb-0">출퇴근 기록 확인</h3>
+									</div>
+									<div class="col">
+										<div class="customize-input float-end">
+											<select class="custom-select custom-select-set form-control bg-white border-0 custom-shadow custom-radius" id="currentMonth">
+												<option value="01">1월</option>
+												<option value="02">2월</option>
+												<option value="03">3월</option>
+												<option value="04">4월</option>
+												<option value="05">5월</option>
+												<option value="06">6월</option>
+												<option value="07">7월</option>
+												<option value="08">8월</option>
+												<option value="09">9월</option>
+												<option value="10">10월</option>
+												<option value="11">11월</option>
+												<option value="12">12월</option>
+											</select>
+										</div>
+										<div class="customize-input float-end">
+											<select class="custom-select custom-select-set form-control bg-white border-0 custom-shadow custom-radius" id="currentYear">
+												<option value="2024" selected>2024</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<input type="hidden" id='csrfParam' th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+								<div id="commuteGrid"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<th:block layout:fragment="footer" th:insert="~{@{/fragments/footer}}"></th:block>
+		</div>
+	</div>
+	<script type="text/javascript" th:src="@{/assets/js/pages/commute_view.js}"></script>
+</html>

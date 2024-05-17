@@ -19,7 +19,7 @@ public class LoginEntity implements UserDetails {
 	private String user_role;
 	private String shop_id;
 	private String user_status;
-
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + this.user_role));

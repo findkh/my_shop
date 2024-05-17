@@ -44,4 +44,9 @@ public interface EmployeeMapper {
 	Map<String, Object> checkCommute(Map<String, Object> param);
 	
 	List<Map<String, Object>> getCommuteList(Map<String, Object> param);
+	
+	String getUserEmployeeCode(String userId);
+	
+	List<Map<String, Object>> getUserCommuteList(Map<String, Object> param);
+	
 }

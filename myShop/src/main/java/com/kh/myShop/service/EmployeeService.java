@@ -512,4 +512,22 @@ public class EmployeeService {
 		logger.info("result: {}", result);
 		return result;
 	}
+	
+	public List<Map<String, Object>> getUserCommuteList(String year, String month) {
+		logger.info("getUserCommuteList Service 호출 year: {} month: {}", year, month);
+		Map<String, Object> param = new HashMap<>();
+		String userId = getCurrentUser().getUsername().toString();
+		
+		String employeeCode = employeeMapper.getUserEmployeeCode(userId);
+		
+		param.put("year-month", year+"-"+month);
+		param.put("employeeCode", employeeCode);
+		
+		System.out.println("========================");
+		System.out.println(param);
+		
+		List<Map<String, Object>> result = employeeMapper.getUserCommuteList(param);
+		logger.info("result: {}", result);
+		return result;
+	}
 }

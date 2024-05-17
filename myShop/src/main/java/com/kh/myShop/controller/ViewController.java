@@ -39,4 +39,9 @@ public class ViewController {
 	public String commuteMng() {
 		return "contents/commute_mng";
 	}
+	
+	@GetMapping("/viewCommute")
+	public String viewCommute() {
+		return "contents/commute_view";
+	}
 }
