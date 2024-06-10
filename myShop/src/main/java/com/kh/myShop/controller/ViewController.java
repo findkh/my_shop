@@ -44,4 +44,9 @@ public class ViewController {
 	public String viewCommute() {
 		return "contents/commute_view";
 	}
+	
+	@GetMapping("/viewNotice")
+	public String viewNotice() {
+		return "contents/notice";
+	}
 }
