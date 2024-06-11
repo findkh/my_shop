@@ -523,11 +523,39 @@ public class EmployeeService {
 		param.put("year-month", year+"-"+month);
 		param.put("employeeCode", employeeCode);
 		
-		System.out.println("========================");
-		System.out.println(param);
-		
 		List<Map<String, Object>> result = employeeMapper.getUserCommuteList(param);
 		logger.info("result: {}", result);
+		return result;
+	}
+	
+	public Map<String, Object> getNoticeList(Integer pageNumber) {
+		logger.info("getNoticeList Service 호출 pageNumber: {}", pageNumber);
+		
+		// 페이지 당 데이터 수
+		int pageSize = 10;
+		
+		// 총 데이터 수 조회
+		int totalRecords = employeeMapper.getTotalRecords();
+		int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
+		
+		// pageNumber가 1보다 작으면 1로 설정, totalPages보다 크면 totalPages로 설정
+		if (pageNumber < 1) {
+			pageNumber = 1;
+		} else if (pageNumber > totalPages) {
+			pageNumber = totalPages;
+		}
+		
+		int offset = (pageNumber - 1) * pageSize;
+		
+		Map<String, Object> param = new HashMap<>();
+		param.put("limit", pageSize);
+		param.put("offset", offset);
+		
+		List<Map<String, Object>> noticeList = employeeMapper.getNoticeList(param);
+		Map<String, Object> result = new HashMap<>();
+		result.put("noticeList", noticeList);
+		result.put("totalPages", totalPages);
+		
 		return result;
 	}
 }

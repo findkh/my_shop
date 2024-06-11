@@ -203,4 +203,15 @@
 		ORDER BY checked_time desc
 	</select>
 	
+	<select id="getNoticeList" resultType="map" parameterType="map">
+		SELECT id, title, name, created_dt
+		FROM notice
+		ORDER BY id DESC
+		LIMIT #{limit} OFFSET #{offset}
+	</select>
+	
+	<select id="getTotalRecords" resultType="int">
+		SELECT COUNT(*) 
+		FROM notice
+	</select>
 </mapper>

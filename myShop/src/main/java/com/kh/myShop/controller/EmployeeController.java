@@ -131,4 +131,9 @@ public class EmployeeController {
 	public List<Map<String, Object>> getUserCommuteList(@RequestParam String year, @RequestParam String month) {
 		return employeeService.getUserCommuteList(year, month);
 	}
+	
+	@GetMapping("/getNoticeList")
+	public Map<String, Object> getNoticeList(@RequestParam Integer pageNumber) {
+		return employeeService.getNoticeList(pageNumber);
+	}
 }
