@@ -53,4 +53,6 @@ public interface EmployeeMapper {
 	
 	int getTotalRecords();
 	
+	Map<String, Object> viewNoticeDesc(String id);
+	
 }

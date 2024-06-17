@@ -558,4 +558,10 @@ public class EmployeeService {
 		
 		return result;
 	}
+	
+	public Map<String, Object> viewNoticeDesc(@RequestParam String id){
+		Map<String, Object> result = employeeMapper.viewNoticeDesc(id);
+		System.out.println(result);
+		return null;
+	}
 }

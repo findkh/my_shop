@@ -136,4 +136,9 @@ public class EmployeeController {
 	public Map<String, Object> getNoticeList(@RequestParam Integer pageNumber) {
 		return employeeService.getNoticeList(pageNumber);
 	}
+	
+	@GetMapping("/viewNoticeDesc")
+	public Map<String, Object> viewNoticeDesc(@RequestParam String id){
+		return employeeService.viewNoticeDesc(id);
+	}
 }

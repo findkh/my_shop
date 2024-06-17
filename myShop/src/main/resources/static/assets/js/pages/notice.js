@@ -28,7 +28,7 @@ function displayNotices(notices) {
 	notices.forEach(function(notice, index) {
 		let noticeRow = $('<tr></tr>');
 		noticeRow.append('<td class="border-top-0 text-dark px-2 py-4 font-14 font-weight-medium text-center">' + notice.id + '</td>');
-		noticeRow.append('<td class="border-top-0 text-dark px-2 py-4 font-14 font-weight-medium">' + notice.title + '</td>');
+		noticeRow.append('<td class="border-top-0 text-dark px-2 py-4 font-14 font-weight-medium"><a href="/viewNoticeDesc?id='+notice.id+'">' + notice.title + '</a></td>');
 		noticeRow.append('<td class="border-top-0 text-dark px-2 py-4 font-14 font-weight-medium text-center">' + notice.name + '</td>');
 		noticeRow.append('<td class="border-top-0 text-dark px-2 py-4 font-14 font-weight-medium text-center">' + formatDate(notice.created_dt) + '</td>');
 		noticeTableBody.append(noticeRow);
