@@ -559,9 +559,67 @@ public class EmployeeService {
 		return result;
 	}
 	
-	public Map<String, Object> viewNoticeDesc(@RequestParam String id){
-		Map<String, Object> result = employeeMapper.viewNoticeDesc(id);
-		System.out.println(result);
-		return null;
+	public Map<String, Object> getNoticeDesc(@RequestParam String id){
+		Map<String, Object> result = employeeMapper.getNoticeDesc(id);
+		if(result != null) {
+			if(result.get("created_id").toString().equals(getCurrentUser().getUsername().toString())) {
+				result.put("flag", "true");
+			} else {
+				result.put("flag", "false");
+			}
+		}
+		return result;
+	}
+	
+	public Map<String,Object> saveNotice(Map<String, Object> noticeMap) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		String msg = "success";
+		logger.info("saveNotice Service 호출");
+		try {
+			employeeMapper.saveNotice(noticeMap);
+			result.put("id", noticeMap.get("id"));
+		} catch(Exception e){
+			e.printStackTrace();
+			msg = "fail";
+		}
+		
+		result.put("msg", msg);
+		
+		logger.info("saveNotice Service 종료");
+		return result;
+	}
+	
+	public Map<String,Object> updateNotice(Map<String, Object> noticeMap) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		String msg = "success";
+		logger.info("updateNotice Service 호출");
+		try {
+			employeeMapper.updateNotice(noticeMap);
+		} catch(Exception e){
+			e.printStackTrace();
+			msg = "fail";
+		}
+		
+		result.put("msg", msg);
+		
+		logger.info("updateNotice Service 종료");
+		return result;
+	}
+	
+	public Map<String,Object> deleteNotice(Map<String, Object> noticeMap) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		String msg = "success";
+		logger.info("deleteNotice Service 호출");
+		try {
+			employeeMapper.deleteNotice(noticeMap);
+		} catch(Exception e){
+			e.printStackTrace();
+			msg = "fail";
+		}
+		
+		result.put("msg", msg);
+		
+		logger.info("deleteNotice Service 종료");
+		return result;
 	}
 }

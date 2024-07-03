@@ -204,8 +204,10 @@
 	</select>
 	
 	<select id="getNoticeList" resultType="map" parameterType="map">
-		SELECT id, title, name, created_dt
-		FROM notice
+		SELECT a.id, a.title, a.created_dt, b.user_name as name
+		FROM notice a
+		LEFT OUTER JOIN user_info b on a.created_id = b.user_id
+		WHERE a.shop_id like #{_shopId}
 		ORDER BY id DESC
 		LIMIT #{limit} OFFSET #{offset}
 	</select>
@@ -215,10 +217,35 @@
 		FROM notice
 	</select>
 	
-	<select id="viewNoticeDesc" resultType="map">
-		SELECT id, title, content, name, created_id, created_dt, modified_id, modified_dt
-		FROM notice
-		WHERE ID::varchar = #{id}
+	<select id="getNoticeDesc" resultType="map">
+		SELECT a.id, a.title, a.content, a.created_id, a.created_dt, a.modified_id, a.modified_dt, b.user_name as name
+		FROM notice a
+		LEFT OUTER JOIN user_info b on a.created_id = b.user_id
+		WHERE a.id::varchar = #{id}
 	</select>
 	
+	<insert id="saveNotice" parameterType="map" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO notice(
+			shop_id, title, content, created_id, created_dt, modified_id, modified_dt
+		)
+		VALUES(
+			#{_shopId}, #{title}, #{content}, #{_userId}, now(), #{_userId}, now()
+		)
+	</insert>
+	
+	<insert id="updateNotice" parameterType="map">
+		UPDATE notice
+		SET
+			title = #{title}, 
+			content = #{content},
+			modified_id = #{_userId},
+			modified_dt =  now()
+		WHERE
+			id::varchar = #{id} and shop_id = #{_shopId} and created_id = #{_userId}
+	</insert>
+	
+	<delete id="deleteNotice" parameterType="map">
+		DELETE FROM notice
+		WHERE id::varchar = #{id}
+	</delete>
 </mapper>

@@ -137,8 +137,23 @@ public class EmployeeController {
 		return employeeService.getNoticeList(pageNumber);
 	}
 	
-	@GetMapping("/viewNoticeDesc")
-	public Map<String, Object> viewNoticeDesc(@RequestParam String id){
-		return employeeService.viewNoticeDesc(id);
+	@GetMapping("/getNoticeDesc")
+	public Map<String, Object> getNoticeDesc(@RequestParam String id){
+		return employeeService.getNoticeDesc(id);
+	}
+	
+	@PostMapping("/employee/saveNotice")
+	public Map<String,Object> saveNotice(@RequestBody Map<String, Object> noticeMap) {
+		return employeeService.saveNotice(noticeMap);
+	}
+	
+	@PostMapping("/employee/updateNotice")
+	public Map<String,Object> updateNotice(@RequestBody Map<String, Object> noticeMap) {
+		return employeeService.updateNotice(noticeMap);
+	}
+	
+	@PostMapping("/employee/deleteNotice")
+	public Map<String,Object> deleteNotice(@RequestBody Map<String, Object> noticeMap) {
+		return employeeService.deleteNotice(noticeMap);
 	}
 }

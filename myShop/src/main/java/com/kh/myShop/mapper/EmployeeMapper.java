@@ -53,6 +53,11 @@ public interface EmployeeMapper {
 	
 	int getTotalRecords();
 	
-	Map<String, Object> viewNoticeDesc(String id);
+	Map<String, Object> getNoticeDesc(String id);
 	
+	void saveNotice(Map<String,Object> param);
+	
+	void updateNotice(Map<String,Object> param);
+	
+	void deleteNotice(Map<String,Object> param);
 }

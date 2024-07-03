@@ -45,8 +45,23 @@ public class ViewController {
 		return "contents/commute_view";
 	}
 	
+	@GetMapping("/noticeList")
+	public String noticeList() {
+		return "contents/notice_list";
+	}
+	
 	@GetMapping("/viewNotice")
 	public String viewNotice() {
-		return "contents/notice";
+		return "contents/notice_view";
+	}
+	
+	@GetMapping("/addNotice")
+	public String addNotice() {
+		return "contents/notice_add";
+	}
+	
+	@GetMapping("/editNotice")
+	public String editNotice() {
+		return "contents/notice_edit";
 	}
 }
