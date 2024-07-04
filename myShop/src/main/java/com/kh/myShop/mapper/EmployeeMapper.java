@@ -60,4 +60,6 @@ public interface EmployeeMapper {
 	void updateNotice(Map<String,Object> param);
 	
 	void deleteNotice(Map<String,Object> param);
+	
+	void incrementViewCount(String id);
 }

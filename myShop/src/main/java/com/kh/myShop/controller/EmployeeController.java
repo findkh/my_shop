@@ -23,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.myShop.service.EmployeeService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
@@ -137,11 +139,14 @@ public class EmployeeController {
 		return employeeService.getNoticeList(pageNumber);
 	}
 	
+//	@GetMapping("/getNoticeDesc")
+//	public Map<String, Object> getNoticeDesc(@RequestParam String id){
+//		return employeeService.getNoticeDesc(id);
+//	}
 	@GetMapping("/getNoticeDesc")
-	public Map<String, Object> getNoticeDesc(@RequestParam String id){
-		return employeeService.getNoticeDesc(id);
+	public Map<String, Object> getNoticeDesc(@RequestParam String id, HttpServletRequest request, HttpServletResponse response) {
+		return employeeService.getNoticeDesc(id, request, response);
 	}
-	
 	@PostMapping("/employee/saveNotice")
 	public Map<String,Object> saveNotice(@RequestBody Map<String, Object> noticeMap) {
 		return employeeService.saveNotice(noticeMap);

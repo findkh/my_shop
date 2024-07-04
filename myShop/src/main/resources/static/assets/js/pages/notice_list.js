@@ -33,6 +33,7 @@ function displayNotices(notices, currentPage) {
 		noticeRow.append('<td class="border-top-0 text-dark px-2 py-4 font-14 font-weight-medium text-center">' + notice.id + '</td>');
 		noticeRow.append('<td class="border-top-0 text-dark px-2 py-4 font-14 font-weight-medium"><a href="/viewNotice?id=' + notice.id + '&pageNumber=' + currentPage + '">' + notice.title + '</a></td>');
 		noticeRow.append('<td class="border-top-0 text-dark px-2 py-4 font-14 font-weight-medium text-center">' + notice.name + '</td>');
+		noticeRow.append('<td class="border-top-0 text-dark px-2 py-4 font-14 font-weight-medium text-center">' + notice.view_count + '</td>');
 		noticeRow.append('<td class="border-top-0 text-dark px-2 py-4 font-14 font-weight-medium text-center">' + formatDate(notice.created_dt) + '</td>');
 		noticeTableBody.append(noticeRow);
 	});

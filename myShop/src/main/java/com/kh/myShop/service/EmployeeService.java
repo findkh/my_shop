@@ -3,7 +3,10 @@ package com.kh.myShop.service;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
@@ -31,6 +34,9 @@ import com.kh.myShop.login.LoginEntity;
 import com.kh.myShop.mapper.EmployeeMapper;
 import com.kh.myShop.util.AES256;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Service
@@ -353,6 +359,7 @@ public class EmployeeService {
 		return null;
 	}
 	
+	//회원 가입
 	@Transactional
 	public Map<String, Object> signup(@RequestParam String email,
 									  @RequestParam String password,
@@ -435,6 +442,7 @@ public class EmployeeService {
 		return returnData;
 	}
 	
+	//근로자 대시보드 정보 조회
 	public Map<String, Object> getDashBoardInfoByEmployee() throws Exception {
 		String id = "";
 		String userName = "";
@@ -465,6 +473,7 @@ public class EmployeeService {
 		return returnData;
 	}
 	
+	//촐퇴근 기록 저장
 	@Transactional
 	public Map<String,Object> saveCommute(Map<String, Object> commuteMap) {
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -494,7 +503,7 @@ public class EmployeeService {
 		return result;
 	}
 	
-	// 
+	//출퇴근 목록 조회
 	public List<Map<String, Object>> getCommuteList() {
 		logger.info("getCommuteList Service 호출");
 		
@@ -513,6 +522,7 @@ public class EmployeeService {
 		return result;
 	}
 	
+	//출근자 리스트 조회
 	public List<Map<String, Object>> getUserCommuteList(String year, String month) {
 		logger.info("getUserCommuteList Service 호출 year: {} month: {}", year, month);
 		Map<String, Object> param = new HashMap<>();
@@ -528,6 +538,7 @@ public class EmployeeService {
 		return result;
 	}
 	
+	//공지사항 목록 조회
 	public Map<String, Object> getNoticeList(Integer pageNumber) {
 		logger.info("getNoticeList Service 호출 pageNumber: {}", pageNumber);
 		
@@ -559,18 +570,54 @@ public class EmployeeService {
 		return result;
 	}
 	
-	public Map<String, Object> getNoticeDesc(@RequestParam String id){
+	//공지사항 상세보기
+	public Map<String, Object> getNoticeDesc(String id, HttpServletRequest request, HttpServletResponse response) {
+		logger.info("getNoticeDesc Service 호출");
 		Map<String, Object> result = employeeMapper.getNoticeDesc(id);
 		if(result != null) {
-			if(result.get("created_id").toString().equals(getCurrentUser().getUsername().toString())) {
+			String createdId = result.get("created_id").toString();
+			String currentUser = getCurrentUser().getUsername().toString();
+			if(createdId.equals(currentUser)) {
 				result.put("flag", "true");
 			} else {
 				result.put("flag", "false");
+				handleViewCount(id, request, response);
 			}
 		}
+		logger.info("getNoticeDesc Service 종료");
 		return result;
 	}
 	
+	//조회수를 증가시키고, 조회 기록을 쿠키에 저장하여 중복 조회를 방지
+	private void handleViewCount(String id, HttpServletRequest request, HttpServletResponse response) {
+		Cookie[] cookies = request.getCookies();
+		boolean isViewed = false;
+		String cookieName = "notice_viewed_" + id;
+		if(cookies != null) {
+			for(Cookie cookie : cookies) {
+				if(cookieName.equals(cookie.getName())) {
+					isViewed = true;
+					break;
+				}
+			}
+		}
+		if(!isViewed) {
+			employeeMapper.incrementViewCount(id);
+			Cookie newCookie = new Cookie(cookieName, "true");
+			newCookie.setMaxAge(getSecondsUntilMidnight());
+			newCookie.setPath("/");
+			response.addCookie(newCookie);
+		}
+	}
+	
+	//자정(한국 시간 기준)까지 남은 초(seconds)를 계산하여 쿠키의 만료 시간을 설정
+	private int getSecondsUntilMidnight() {
+		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+		LocalDateTime midnight = now.toLocalDate().atStartOfDay().plusDays(1);
+		return (int) Duration.between(now, midnight).getSeconds();
+	}
+	
+	//공지사항 저장
 	public Map<String,Object> saveNotice(Map<String, Object> noticeMap) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		String msg = "success";
@@ -589,6 +636,7 @@ public class EmployeeService {
 		return result;
 	}
 	
+	//공지사항 수정
 	public Map<String,Object> updateNotice(Map<String, Object> noticeMap) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		String msg = "success";
@@ -606,6 +654,7 @@ public class EmployeeService {
 		return result;
 	}
 	
+	//공지사항 삭제
 	public Map<String,Object> deleteNotice(Map<String, Object> noticeMap) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		String msg = "success";

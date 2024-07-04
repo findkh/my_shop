@@ -29,7 +29,8 @@ $(document).ready(function() {
 					}
 					$('#title').val(data.title);
 					$('#name').val(data.name);
-					$('#created_dt').val(formatDate(data.created_dt))
+					$('#view_count').val(data.view_count);
+					$('#created_dt').val(formatDate(data.created_dt));
 					quill.clipboard.dangerouslyPasteHTML(data.content);
 				}
 			},

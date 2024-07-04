@@ -204,7 +204,7 @@
 	</select>
 	
 	<select id="getNoticeList" resultType="map" parameterType="map">
-		SELECT a.id, a.title, a.created_dt, b.user_name as name
+		SELECT a.id, a.title, a.created_dt, b.user_name as name, a.view_count
 		FROM notice a
 		LEFT OUTER JOIN user_info b on a.created_id = b.user_id
 		WHERE a.shop_id like #{_shopId}
@@ -218,7 +218,7 @@
 	</select>
 	
 	<select id="getNoticeDesc" resultType="map">
-		SELECT a.id, a.title, a.content, a.created_id, a.created_dt, a.modified_id, a.modified_dt, b.user_name as name
+		SELECT a.id, a.title, a.content, a.created_id, a.created_dt, a.modified_id, a.modified_dt, b.user_name as name, a.view_count
 		FROM notice a
 		LEFT OUTER JOIN user_info b on a.created_id = b.user_id
 		WHERE a.id::varchar = #{id}
@@ -248,4 +248,10 @@
 		DELETE FROM notice
 		WHERE id::varchar = #{id}
 	</delete>
+	
+	<update id="incrementViewCount">
+		UPDATE notice
+		SET view_count = view_count + 1
+		WHERE id::varchar = #{id}
+	</update>
 </mapper>
