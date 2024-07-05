@@ -254,4 +254,19 @@
 		SET view_count = view_count + 1
 		WHERE id::varchar = #{id}
 	</update>
+	
+	<select id="getDashBoardNoticeList" resultType="map" parameterType="map">
+		SELECT a.id, 
+			a.title, 
+			CASE WHEN LENGTH(a.content) > 30 THEN CONCAT(SUBSTRING(a.content, 1, 10), '...')
+				ELSE a.content
+			END AS content, 
+			a.created_dt, 
+			b.user_name 
+		FROM notice a
+		LEFT OUTER JOIN user_info b ON a.created_id = b.user_id
+		WHERE a.shop_id = #{_shopId}
+		ORDER BY id DESC
+		LIMIT 3;
+	</select>
 </mapper>

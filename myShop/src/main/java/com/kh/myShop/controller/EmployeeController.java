@@ -112,10 +112,10 @@ public class EmployeeController {
 		return employeeService.getEmployeeInfoByEmployee();
 	}
 	
-	//직원 대시보드 정보
-	@GetMapping("/getDashBoardInfoByEmployee")
-	public Map<String, Object> getDashBoardInfoByEmployee() throws Exception{
-		return employeeService.getDashBoardInfoByEmployee();
+	//대시보드 Info
+	@GetMapping("/getDashBoardInfo")
+	public Map<String, Object> getDashBoardInfo() throws Exception{
+		return employeeService.getDashBoardInfo();
 	}
 	
 	//출퇴근 기록 저장
@@ -128,21 +128,12 @@ public class EmployeeController {
 	public List<Map<String, Object>> getCommuteList(){
 		return employeeService.getCommuteList();
 	}
-	
-	@GetMapping("/getUserCommuteList")
-	public List<Map<String, Object>> getUserCommuteList(@RequestParam String year, @RequestParam String month) {
-		return employeeService.getUserCommuteList(year, month);
-	}
-	
+		
 	@GetMapping("/getNoticeList")
 	public Map<String, Object> getNoticeList(@RequestParam Integer pageNumber) {
 		return employeeService.getNoticeList(pageNumber);
 	}
 	
-//	@GetMapping("/getNoticeDesc")
-//	public Map<String, Object> getNoticeDesc(@RequestParam String id){
-//		return employeeService.getNoticeDesc(id);
-//	}
 	@GetMapping("/getNoticeDesc")
 	public Map<String, Object> getNoticeDesc(@RequestParam String id, HttpServletRequest request, HttpServletResponse response) {
 		return employeeService.getNoticeDesc(id, request, response);

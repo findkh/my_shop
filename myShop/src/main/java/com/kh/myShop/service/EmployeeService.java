@@ -442,35 +442,33 @@ public class EmployeeService {
 		return returnData;
 	}
 	
-	//근로자 대시보드 정보 조회
-	public Map<String, Object> getDashBoardInfoByEmployee() throws Exception {
-		String id = "";
-		String userName = "";
+	//대시보드 정보 조회
+	public Map<String, Object> getDashBoardInfo() throws Exception {
+		Map<String, Object> result = new HashMap<>();
+		LoginEntity userInfo = (LoginEntity) getCurrentUser();
+		String userRole = userInfo.getAuthorities().toString();
+		String id = userInfo.getId().toString();
+		String userName = userInfo.getUser_name().toString();
+		Map<String,Object> param = new HashMap<>();
 		
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication != null && authentication.getPrincipal() instanceof LoginEntity) {
-			LoginEntity loginEntity = (LoginEntity) authentication.getPrincipal();
-			id = loginEntity.getId();
-			userName = loginEntity.getUser_name();
-			System.out.println("ID 값: " + id);
-		} else {
-			System.out.println("인증 정보가 올바르지 않습니다.");
+		result.put("userName", userName);
+		result.put("noticeList",employeeMapper.getDashBoardNoticeList(param));
+		
+		if(userRole.equals("[ROLE_ADMIN]")) {
+			result.put("commuteList", getCommuteList());
+		} else if(userRole.equals("[ROLE_USER]")){
+			result.put("code", getDashBoardInfoByEmployee(id));
 		}
 		
+		return result;
+	}
+	
+	//근로자 대시보드 정보 조회
+	public Map<String, Object> getDashBoardInfoByEmployee(String id) throws Exception {
 		logger.info("getDashBoardInfoByEmployee Service 호출 로그인 id: {}", id);
-		
-		Map<String, Object> returnData = new HashMap<String, Object>();
 		Map<String, Object> param = new HashMap<String, Object>();
-		Map<String, Object> userInfo = new HashMap<String, Object>();
-		
-		userInfo.put("userName", userName);
-		returnData.put("userInfo", userInfo);
-		
 		param.put("id", id);
-		Map<String, Object> qrCodeStr = employeeMapper.getQrCode(param);
-		returnData.put("code", qrCodeStr);
-		
-		return returnData;
+		return employeeMapper.getQrCode(param);
 	}
 	
 	//촐퇴근 기록 저장

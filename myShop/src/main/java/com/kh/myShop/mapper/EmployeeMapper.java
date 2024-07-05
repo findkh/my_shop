@@ -62,4 +62,6 @@ public interface EmployeeMapper {
 	void deleteNotice(Map<String,Object> param);
 	
 	void incrementViewCount(String id);
+	
+	List<Map<String, Object>> getDashBoardNoticeList(Map<String,Object> param);
 }
