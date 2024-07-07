@@ -36,6 +36,11 @@ $(document).ready(function() {
 			type_str: $('#typeStr').val(),
 			qrcode: $('#emplyeeCode').val(),
 		};
+		
+		if($('#emplyeeCode').val() == ''){
+			alert('직원코드를 입력해주세요.');
+			return false;
+		}
 	
 		$.ajax({
 			url: '/employee/saveCommute',

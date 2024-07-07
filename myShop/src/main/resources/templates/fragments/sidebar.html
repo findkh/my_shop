@@ -44,16 +44,6 @@
 						</ul>
 					</li>
 					
-					<li class="sidebar-item" sec:authorize="hasRole('ADMIN')">
-						<a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
-							<i data-feather="feather" class="feather-icon"></i>
-							<span class="hide-menu">매장 관리</span>
-						</a>
-						<ul aria-expanded="false" class="collapse first-level base-level-line">
-							<li class="sidebar-item"><a href="icon-simple-lineicon.html" class="sidebar-link"><span class="hide-menu">매출 관리</span></a></li>
-						</ul>
-					</li>
-	
 					<li class="list-divider" sec:authorize="hasRole('ADMIN')"></li>
 					<li class="nav-small-cap" sec:authorize="hasAnyRole('ADMIN','ADMIN_CHECK')">
 						<span class="hide-menu">Commute Management</span>
@@ -63,8 +53,6 @@
 							<i data-feather="sidebar" class="feather-icon"></i><span class="hide-menu">출퇴근기록</span>
 						</a>
 					</li>
-					
-					<li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="/logout" aria-expanded="false"><i data-feather="log-out" class="feather-icon"></i><span class="hide-menu">Logout</span></a></li>
 				</ul>
 			</nav>
 			<!-- End Sidebar navigation -->

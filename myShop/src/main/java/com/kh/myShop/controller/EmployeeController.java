@@ -152,4 +152,9 @@ public class EmployeeController {
 	public Map<String,Object> deleteNotice(@RequestBody Map<String, Object> noticeMap) {
 		return employeeService.deleteNotice(noticeMap);
 	}
+	
+	@GetMapping("/getUserCommuteList")
+	public List<Map<String, Object>> getUserCommuteList(@RequestParam String year, @RequestParam String month) {
+		return employeeService.getUserCommuteList(year, month);
+	}
 }

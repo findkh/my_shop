@@ -24,6 +24,7 @@ function getDashBoardInfo() {
 		success: function(response) {
 			if(response.userName != undefined){
 				$('#userName').html(response.userName);
+				$('#headerUserName').html(response.userName + ' 님');
 			}
 			
 			if(response.code != null) {
